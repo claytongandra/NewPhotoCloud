@@ -1,0 +1,27 @@
+﻿<ul class="jqueryFileTree" style="display: none;">
+    @*Lista os diretórios *@
+    @try
+    {
+        foreach (NewPhotoCloud.Models.ListaDiretorios dir in Model.listaDiretorio)
+        {
+            <li class="directory collapsed" data-origemacesso="1">
+                <a href="#" url="@dir.Diretorio.Replace(@"//",@"/")" data-caminho="@dir.Diretorio.Replace(@"//",@"/")">@dir.DiretorioNome</a>
+            </li>
+        }
+        @*Lista os Arquivos *@
+
+        foreach (NewPhotoCloud.Models.ListaArquivos arq in Model.listaArquivo)
+        {
+
+            <li class="file ext_@arq.ArquivoExtensao" data-origemacesso="1">
+                <a href="@arq.ArquivoDiretorio.Replace(@"//", @"/")" url="@arq.ArquivoDiretorio.Replace(@"//", @"/")" data-caminho="@arq.ArquivoCaminho.Replace(@"//", @"/")" rel="prettyPhoto[gallerytree_@arq.ArquivoCaminho]">@arq.ArquivoNome</a>
+            </li>
+        }
+    }
+    catch (Exception e)
+    {
+        @Html.Raw(ViewBag.MessageError);
+    }
+    finally { }
+
+</ul>

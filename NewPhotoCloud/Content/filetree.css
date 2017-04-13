@@ -1,0 +1,104 @@
+UL.jqueryFileTree {
+	font-family: Verdana, sans-serif;
+	font-size: 12px;
+	line-height: 18px;
+	padding: 0px;
+	margin: 0px;
+	overflow:hidden;
+	border:none #00FF00 1px;
+}
+
+UL.jqueryFileTree LI {
+	list-style: none;
+	padding: 0px;
+	padding-left: 20px;
+	margin: 0px;
+
+}
+
+UL.jqueryFileTree A {
+	color: #333;
+	text-decoration: none;
+	display: block;
+	padding: 0px 2px; 
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+UL.jqueryFileTree A:hover {
+	background: #DFDFE0;
+     border-radius: 4px;
+     -webkit-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+/* Core Styles */
+.jqueryFileTree LI.directory { background: url(../Content/pho_images/phoimg_filetree/directory.png) left top no-repeat; }
+.jqueryFileTree LI.expanded { background: url(../Content/pho_images/phoimg_filetree/folder_open.png) left top no-repeat; }
+.jqueryFileTree LI.file { background: url(../Content/pho_images/phoimg_filetree/file.png) left top no-repeat; }
+.jqueryFileTree LI.wait { background: url(../Content/pho_images/phoimg_filetree/spinner.gif) left top no-repeat; }
+.jqueryFileTree LI.warning { background: url(../Content/pho_images/phoimg_filetree/warning.png) left top no-repeat; }
+.jqueryFileTree LI.error { background: url(../Content/pho_images/phoimg_filetree/error.png) left top no-repeat; }
+.jqueryFileTree LI.info { background: url(../Content/pho_images/phoimg_filetree/info.png) left top no-repeat; }
+/* File Extensions*/
+.jqueryFileTree LI.ext_3gp { background: url(../Content/pho_images/phoimg_filetree/film.png) left top no-repeat; }
+.jqueryFileTree LI.ext_afp { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_afpa { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_asp { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_aspx { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_avi { background: url(../Content/pho_images/phoimg_filetree/film.png) left top no-repeat; }
+.jqueryFileTree LI.ext_bat { background: url(../Content/pho_images/phoimg_filetree/application.png) left top no-repeat; }
+.jqueryFileTree LI.ext_bmp { background: url(../Content/pho_images/phoimg_filetree/picture.png) left top no-repeat; }
+.jqueryFileTree LI.ext_c { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_cfm { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_cgi { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_com { background: url(../Content/pho_images/phoimg_filetree/application.png) left top no-repeat; }
+.jqueryFileTree LI.ext_cpp { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_css { background: url(../Content/pho_images/phoimg_filetree/css.png) left top no-repeat; }
+.jqueryFileTree LI.ext_doc { background: url(../Content/pho_images/phoimg_filetree/doc.png) left top no-repeat; }
+.jqueryFileTree LI.ext_exe { background: url(../Content/pho_images/phoimg_filetree/application.png) left top no-repeat; }
+.jqueryFileTree LI.ext_gif { background: url(../Content/pho_images/phoimg_filetree/picture.png) left top no-repeat; }
+.jqueryFileTree LI.ext_fla { background: url(../Content/pho_images/phoimg_filetree/flash.png) left top no-repeat; }
+.jqueryFileTree LI.ext_h { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_htm { background: url(../Content/pho_images/phoimg_filetree/html.png) left top no-repeat; }
+.jqueryFileTree LI.ext_html { background: url(../Content/pho_images/phoimg_filetree/html.png) left top no-repeat; }
+.jqueryFileTree LI.ext_jar { background: url(../Content/pho_images/phoimg_filetree/java.png) left top no-repeat; }
+.jqueryFileTree LI.ext_jpg { background: url(../Content/pho_images/phoimg_filetree/picture.png) left top no-repeat; }
+.jqueryFileTree LI.ext_jpeg { background: url(../Content/pho_images/phoimg_filetree/picture.png) left top no-repeat; }
+.jqueryFileTree LI.ext_js { background: url(../Content/pho_images/phoimg_filetree/script.png) left top no-repeat; }
+.jqueryFileTree LI.ext_lasso { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_log { background: url(../Content/pho_images/phoimg_filetree/txt.png) left top no-repeat; }
+.jqueryFileTree LI.ext_m4p { background: url(../Content/pho_images/phoimg_filetree/music.png) left top no-repeat; }
+.jqueryFileTree LI.ext_mov { background: url(../Content/pho_images/phoimg_filetree/film.png) left top no-repeat; }
+.jqueryFileTree LI.ext_mp3 { background: url(../Content/pho_images/phoimg_filetree/music.png) left top no-repeat; }
+.jqueryFileTree LI.ext_mp4 { background: url(../Content/pho_images/phoimg_filetree/film.png) left top no-repeat; }
+.jqueryFileTree LI.ext_mpg { background: url(../Content/pho_images/phoimg_filetree/film.png) left top no-repeat; }
+.jqueryFileTree LI.ext_mpeg { background: url(../Content/pho_images/phoimg_filetree/film.png) left top no-repeat; }
+.jqueryFileTree LI.ext_ogg { background: url(../Content/pho_images/phoimg_filetree/music.png) left top no-repeat; }
+.jqueryFileTree LI.ext_pcx { background: url(../Content/pho_images/phoimg_filetree/picture.png) left top no-repeat; }
+.jqueryFileTree LI.ext_pdf { background: url(../Content/pho_images/phoimg_filetree/pdf.png) left top no-repeat; }
+.jqueryFileTree LI.ext_php { background: url(../Content/pho_images/phoimg_filetree/php.png) left top no-repeat; }
+.jqueryFileTree LI.ext_png { background: url(../Content/pho_images/phoimg_filetree/picture.png) left top no-repeat; }
+.jqueryFileTree LI.ext_ppt { background: url(../Content/pho_images/phoimg_filetree/ppt.png) left top no-repeat; }
+.jqueryFileTree LI.ext_psd { background: url(../Content/pho_images/phoimg_filetree/psd.png) left top no-repeat; }
+.jqueryFileTree LI.ext_pl { background: url(../Content/pho_images/phoimg_filetree/script.png) left top no-repeat; }
+.jqueryFileTree LI.ext_py { background: url(../Content/pho_images/phoimg_filetree/script.png) left top no-repeat; }
+.jqueryFileTree LI.ext_rb { background: url(../Content/pho_images/phoimg_filetree/ruby.png) left top no-repeat; }
+.jqueryFileTree LI.ext_rbx { background: url(../Content/pho_images/phoimg_filetree/ruby.png) left top no-repeat; }
+.jqueryFileTree LI.ext_rhtml { background: url(../Content/pho_images/phoimg_filetree/ruby.png) left top no-repeat; }
+.jqueryFileTree LI.ext_rpm { background: url(../Content/pho_images/phoimg_filetree/linux.png) left top no-repeat; }
+.jqueryFileTree LI.ext_ruby { background: url(../Content/pho_images/phoimg_filetree/ruby.png) left top no-repeat; }
+.jqueryFileTree LI.ext_sql { background: url(../Content/pho_images/phoimg_filetree/db.png) left top no-repeat; }
+.jqueryFileTree LI.ext_swf { background: url(../Content/pho_images/phoimg_filetree/flash.png) left top no-repeat; }
+.jqueryFileTree LI.ext_tif { background: url(../Content/pho_images/phoimg_filetree/picture.png) left top no-repeat; }
+.jqueryFileTree LI.ext_tiff { background: url(../Content/pho_images/phoimg_filetree/picture.png) left top no-repeat; }
+.jqueryFileTree LI.ext_txt { background: url(../Content/pho_images/phoimg_filetree/txt.png) left top no-repeat; }
+.jqueryFileTree LI.ext_vb { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_wav { background: url(../Content/pho_images/phoimg_filetree/music.png) left top no-repeat; }
+.jqueryFileTree LI.ext_wmv { background: url(../Content/pho_images/phoimg_filetree/film.png) left top no-repeat; }
+.jqueryFileTree LI.ext_xls { background: url(../Content/pho_images/phoimg_filetree/xls.png) left top no-repeat; }
+.jqueryFileTree LI.ext_xml { background: url(../Content/pho_images/phoimg_filetree/code.png) left top no-repeat; }
+.jqueryFileTree LI.ext_zip { background: url(../Content/pho_images/phoimg_filetree/zip.png) left top no-repeat; }

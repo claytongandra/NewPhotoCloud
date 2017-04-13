@@ -1,0 +1,226 @@
+<div class="row">
+    <div class="col-md-12">
+        @{
+            int _qtdArquivosPastaAberta = 0;
+            int _qtdPastasPastaAberta = 0;
+        }
+        @foreach (NewPhotoCloud.Models.ListaDiretorios dir in Model.listaDiretorio)
+        {
+            int _qtdArquivos = 0;
+            int _qtdPastas = 0;
+            string _qtdpastas_font = "";
+            string _textpastas_font = "";
+            string _listaSubPastas = "";
+
+            string _caminhoRealMini = Server.MapPath("~/pho_fotos_miniatura/" + dir.DiretorioBase + "/" + dir.Diretorio.Replace(@"//", @"/"));
+            string _caminhoReal = Server.MapPath("~/pho_fotos/" + dir.DiretorioBase + "/" + dir.Diretorio.Replace(@"//", @"/"));
+
+            List<string> subDiretorioListaModel = new List<string>();
+            if (System.IO.Directory.Exists(_caminhoReal))
+            {
+
+                IEnumerable<string> subDiretoriosLista = Directory.EnumerateDirectories(_caminhoReal);
+                foreach (string subDir in subDiretoriosLista)
+                {
+                    DirectoryInfo folderInfo = new DirectoryInfo(subDir);
+
+
+
+                    subDiretorioListaModel.Add(folderInfo.Name.ToString());
+
+                    _qtdPastas++;
+                }
+
+            }
+
+            List<NewPhotoCloud.Models.ListaArquivos> arquivosListaModel = new List<NewPhotoCloud.Models.ListaArquivos>();
+            if (System.IO.Directory.Exists(_caminhoReal))
+            {
+                IEnumerable<string> subFileList = Directory.EnumerateFiles(_caminhoReal);
+
+                foreach (string arq in subFileList)
+                {
+                    NewPhotoCloud.Models.ListaArquivos arquivosModel = new NewPhotoCloud.Models.ListaArquivos();
+
+                    FileInfo a = new FileInfo(arq);
+
+                    arquivosModel.ArquivoDiretorio = "pho_fotos_miniatura" + "/" + dir.DiretorioBase + dir.Diretorio.Replace(@"//", @"/") + Path.GetFileName(arq);
+                    arquivosModel.ArquivoExtensao = a.Extension.ToLower();
+
+                    arquivosListaModel.Add(arquivosModel);
+                    _qtdArquivos++;
+                }
+            }
+            //*****************************************************************************************/
+            <div class="folders">
+                <div class="folders_select_chkbox border_radius5"><input type="checkbox" id="chkselectfolders_@_qtdPastasPastaAberta" class="chkselectfolders" name="chkselectfolders" value="@dir.Diretorio.Replace(@"//", @"/")" /></div>
+                <a href="#" rel="@dir.Diretorio.Replace(@"//", @"/")">
+                    <div class="folders_select">
+
+                    </div>
+                    <div class="folders_slide">
+                        @{
+            int _qtdSlide = 0;
+            string _classeImagemVideo;
+            foreach (NewPhotoCloud.Models.ListaArquivos arq in arquivosListaModel)
+            {
+                string _estencao = arq.ArquivoExtensao;
+                string _diretorioArquivo = "";
+                _classeImagemVideo = "folders_panel_img";
+                _diretorioArquivo = arq.ArquivoDiretorio;
+
+                switch (arq.ArquivoExtensao.ToLower())
+                {
+                    case ".mpg":
+                        _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                        _classeImagemVideo = "folders_panel_imgvideo";
+                        break;
+                    case ".wmv":
+                        _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                        _classeImagemVideo = "folders_panel_imgvideo";
+                        break;
+                    case ".mp4":
+                        _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                        _classeImagemVideo = "folders_panel_imgvideo";
+                        break;
+
+                }
+
+                <div id="slide-" class="folders_panel"><img class="@_classeImagemVideo" alt="" src="@_diretorioArquivo" /></div>
+                if (_qtdSlide >= 4)
+                {
+                    break;
+                }
+                _qtdSlide++;
+            }
+                        }
+                    </div>
+                    @{
+            if (_qtdArquivos == 0 && _qtdPastas == 0)
+            {
+                <img alt="" src="Content/pho_images/phoimg_botoes/imgbtn_folderempty_aero.png" />
+            }
+            else if (_qtdArquivos == 0 && _qtdPastas > 0)
+            {
+                <img alt="" src="Content/pho_images/phoimg_botoes/imgbtn_foldercameralogo_aero.png" />
+            }
+                    }
+                    <div class="folders_qtdarquivospastas">
+                        @if (_qtdArquivos == 0 && _qtdPastas == 0)
+                        {
+                            <center>Esta pasta está vazia </center>
+                        }
+                        else
+                        {
+                            if (_qtdArquivos > 0)
+                            {
+                                <div class="folders_qtdarquivos">
+                                    <div class="qtdarquivos">
+                                        @_qtdArquivos
+                                    </div>
+                                    <div class="textarquivos" contenteditable="true">
+                                        @if (_qtdArquivos > 1)
+                                        {
+                                            <center>Arquivos</center>
+                                        }
+                                        else
+                                        {
+                                            <center>Arquivo</center>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                _qtdpastas_font = " qtdpastas_font";
+                                _textpastas_font = " textpastas_font";
+                            }
+                            if (_qtdPastas > 0)
+                            {
+                                <div class="folders_qtdpastas">
+                                    <div class="qtdpastas @_qtdpastas_font">
+                                        @_qtdPastas
+                                    </div>
+                                    <div class="textpastas @_textpastas_font">
+                                        @if (_qtdPastas > 1)
+                                        {
+                                            <center>Pastas</center>
+                                        }
+                                        else
+                                        {
+                                            <center>Pasta</center>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </a>
+                <ul class="folder_titulo">
+                    <li>
+                        @dir.DiretorioNome
+
+                    </li>
+                </ul>
+
+
+
+
+            </div>
+                        _qtdPastasPastaAberta++;
+        }
+        @*Listing the files *@
+        <ul class="thumb gallery">
+            @foreach (NewPhotoCloud.Models.ListaArquivos arq in Model.listaArquivo)
+            {
+                string _diretorioArquivo = "";
+
+
+                _diretorioArquivo = arq.ArquivoDiretorio.Replace(@"pho_fotos", @"pho_fotos_miniatura");
+
+                switch (arq.ArquivoExtensao.ToLower())
+                {
+                    case "mpg":
+                        _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                        break;
+                    case "wmv":
+                        _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                        break;
+                    case "mp4":
+                        _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                        break;
+
+                }
+                <li>
+                    <a href="@arq.ArquivoDiretorio.Replace(@"//", @"/")" url="@arq.ArquivoDiretorio.Replace(@"//", @"/")" rel="prettyPhoto[gallery_@_pastaAtual]">
+                        <img class="resized" alt="" src="@_diretorioArquivo" />
+                    </a>
+                </li>
+                _qtdArquivosPastaAberta++;
+            }
+
+
+        </ul>
+    </div>
+@if (_qtdPastasPastaAberta == 0 && _qtdArquivosPastaAberta == 0)
+{
+    <div class="block">
+        <br />
+        <h4>Esta pasta está vazia.</h4>
+        <div class="folder_empty">
+            <a id="criarpasta" href="#" rel="@_diretorioAtual">
+                <img src='Content/pho_images/phoimg_botoes/imgbtn_adicionarpasta_branco.png' />
+                <span>Criar Pasta</span>
+            </a>
+
+        </div>
+        <div class="folder_empty">
+            <a id="carregararquivos" href="#" rel="@_diretorioAtual">
+                <img src='Content/pho_images/phoimg_botoes/imgbtn_adicionararquivo_branco.png' />
+                <span>Carregar Arquivos</span>
+            </a>
+
+        </div>
+    </div>
+}
+</div>

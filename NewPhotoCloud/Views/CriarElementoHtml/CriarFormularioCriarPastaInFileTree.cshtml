@@ -1,0 +1,23 @@
+﻿@model NewPhotoCloud.Models.CriarPasta
+
+@using (Html.BeginForm("CriarPastaInFileTree", "GerenciarPasta", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "form_criarpastainfiletree" }))
+{ @Html.AntiForgeryToken()
+
+<li id="filetree_conteiner_camponovapasta" class="directory itemfiletree_selected expanded">
+    <a href="#" url="" data-caminho="">
+        <div class="input-group-btn" style="padding:2px">
+            @Html.TextBoxFor(m => m.NomePasta, new { @id = "NomePasta", @class = "form-control", @placeholder = "Nome da pasta", @maxlength = "50", data_caminho = @Model.CaminhoPasta })
+            <input type="hidden" name="hidCaminhoCriarNovaPasta" id="hidCaminhoCriarNovaPasta" value="@Model.CaminhoPasta" />
+            <div class="btn-group" role="group">
+                <button type="submit" id="btnCriarPastaInFileTree" class="btn btn-default">
+                    <i class="fa fa-check">&nbsp;</i>Criar
+                </button>
+                <button type="button" id="btnCancelarCriarPastaInFileTree" class="btn btn-default">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </a>
+    </li>
+}
+

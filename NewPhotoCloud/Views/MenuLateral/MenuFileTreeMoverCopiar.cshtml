@@ -1,0 +1,22 @@
+﻿<ul class="jqueryFileTree" style="display: none;">
+
+    @*Lista os diretórios *@
+    @try
+    {
+        foreach (NewPhotoCloud.Models.ListaDiretorios dir in Model.listaDiretorio)
+        {
+            dir.Diretorio = dir.Diretorio + dir.DiretorioNome + "/";
+
+            <li class="filetreemovercopiar directory collapsed">
+                <a href="#" url="@dir.Diretorio.Replace(@"//",@"/")" data-caminho="@dir.Diretorio.Replace(@"//",@"/")">@dir.DiretorioNome</a>
+            </li>
+        }
+
+    }
+    catch (Exception e)
+    {
+        @Html.Raw(ViewBag.MessageError);
+    }
+    finally { }
+
+</ul>

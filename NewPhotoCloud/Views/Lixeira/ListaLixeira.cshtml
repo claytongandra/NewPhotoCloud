@@ -1,0 +1,77 @@
+﻿@using System;
+@using System.IO;
+@{
+    var _pastaAtual = @ViewData["pastaAtual"];
+    int _qtdPastas = 0;
+    int _qtdArquivos = 0;
+}
+
+<input type="text" name="hidDiretorioPai" id="hidDiretorioPai" value="/" />
+<input type="text" name="hidDiretorioAtual" id="hidDiretorioAtual" value="/Lixeira/" />
+
+
+<div class="row">
+    <ul class="nav" id="container_breadcrumb" style="background-color: #DFDFE0; padding:4px;">
+
+        <li>
+            <div class="dropdown" style="float:left;">
+                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownPastaAtual" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="fa fa-trash"></i>
+                    @_pastaAtual
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownPastaAtual" data-caminho="[photocloudlixeira:]">
+                    @*<li role="separator" class="divider"></li>*@
+                    <li><a href="#" class="btn disabled" style="text-align: left;"><i class="fa fa-trash">&nbsp;&nbsp;</i>Esvaziar lixeira</a></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <ul id="menuhorizontal" class="nav navbar-nav"></ul>
+
+        </li>
+
+    </ul>
+</div>
+@{
+
+    _qtdPastas = Model.listaDiretorio.Count;
+    _qtdArquivos = Model.listaArquivo.Count;
+}
+
+@if (_qtdPastas > 0)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <ul>
+                @foreach (NewPhotoCloud.Models.ListaDiretorios dir in Model.listaDiretorio)
+                {
+
+                    <li>
+                        <a href='#' rel="@dir.Diretorio.Replace(@"//", @"/")">
+                            @dir.DiretorioNome
+                        </a>
+                    </li>
+
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+@if (_qtdPastas == 0 && _qtdArquivos == 0)
+{
+    <div class="row" id="container_pastavazia">
+        <br />
+        <h4>Sua lixeira está vazia.</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-12" style="border:1px none #ff0000;">
+                <img src="~/Content/pho_images/phoimg_icones/trash_empty_circle-shadow.png" />
+            </div>
+        </div>
+
+
+    </div><!--row -->
+
+}

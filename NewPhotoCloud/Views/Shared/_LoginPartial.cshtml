@@ -1,0 +1,133 @@
+﻿@using Microsoft.AspNet.Identity
+@using NewPhotoCloud.Repositories;
+
+@if (Request.IsAuthenticated)
+{
+
+    string _usuarioFotoPerfil = null;
+    string _caminhoAvatar = "/Content/pho_images/phoimg_icones/default_avatar_vs1.jpg ";
+    
+    UsuarioLogado infoUsuarioLogado = new UsuarioLogado();
+
+    var _infoUsuarioLogado = infoUsuarioLogado.GetUsuarioLogado(HttpContext.Current.User.Identity.Name);
+
+    _usuarioFotoPerfil = _infoUsuarioLogado.Usu_FotoPerfil;
+
+    if (_usuarioFotoPerfil != null)
+    {
+        _caminhoAvatar = "/pho_usuario/" + _infoUsuarioLogado.Usu_DiretorioBase +"/"+ _usuarioFotoPerfil;
+    }
+    
+     
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+    }
+    <ul class="nav navbar-nav navbar-right">
+        @*<li class="dropdown" id="menu_aviso">
+            <a class="dropdown-toggle count-info disabled" data-toggle="dropdown" href="#">
+                <i class="fa fa-bell"></i>
+                <span id="menu_aviso_cont" class="label label-default" style="border-radius: 50%;">0</span>
+            </a>
+            <ul class="dropdown-menu dropdown-alerts" id="menu_aviso_lista">
+                <li>
+                    <div style="margin: 3px;border:1px none #4cff00;">
+                        <span style="display:block; font-size: 11px; margin:0 0 0 20px; min-width:200px; width:200px; color: #bbb;">Nenhum aviso.</span>
+                    </div>
+                </li>
+                <li class="divider"></li>
+
+            </ul>
+        </li>*@
+        <li id="menutop_desfazerMoverpara" style="display:none;">
+            <a id="menutop_desfazerMoverpara_btn" data-toggle="modal" data-target="#modalBootstrap" href="#">
+                <i class="fa fa-undo"></i>
+                <span class="hidden-xs hidden-sm">Desfazer</span>
+                <span id="menutop_desfazerMoverpara_cont" class="label label-default" style="border-radius: 50%;">0</span>
+            </a>
+        </li>
+        @*<li class="dropdown" id="menu_undo" style="display:none;">
+            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                <i class="fa fa-undo"></i>
+                <span id="menu_undo_cont" class="label label-default" style="border-radius: 50%;">0</span>
+            </a>
+            <ul class="dropdown-menu dropdown-alerts" id="menu_undo_lista">
+
+
+            </ul>
+        </li>*@
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href='#' id="userLink">
+                <i class="fa fa-user"></i>
+                <span class="hidden-xs hidden-sm">Olá @User.Identity.GetUserName()!</span>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li>
+                    <div class="user-menu">
+                        <a href="#" id="userAvatarMenu" data-toggle="modal" data-target="#modalBootstrap" data-whatever="" ><img data-tooltip="true" data-placement="right" title="Alterar imagem de perfil" id="imagemAvatar" class="img-circle" src="@_caminhoAvatar" width="45" height="45" /></a>
+                        <span class="user-position">Entrou como:</span>
+                        <span class="user-name">@User.Identity.GetUserName()</span>
+                    </div>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="javascript:document.getElementById('logoutForm').submit()">
+                        <i class="fa fa-sign-out"></i>
+                        <span class="hidden-xs hidden-sm">Sair</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle count-info" data-hover="dropdown" data-toggle="dropdown" href="#" id="settingsLink">
+                <i class="fa fa-cog"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li>
+                    <a href="#" onclick="createPage('/General/User/Editar/172', 'Cadastro Completoc243045c-e52f-437f-8c17-d106ce5c0a22')">
+                        <i class="fa fa-user-md">&nbsp;&nbsp;</i>
+                        <span class="hidden-xs hidden-sm btn btn-xs disabled">Minha Conta</span>
+                    </a>
+                </li>
+                <li>
+                    @*<a href='@Url.Action("ChangePassword", "Manage")'>*@
+                    <a href="#" id="alterarSenha" data-toggle="modal" data-target="#modalBootstrap" data-whatever="">
+                        <i class="fa fa-cogs">&nbsp;&nbsp;</i>
+                        <span class="hidden-xs hidden-sm">Alterar Senha</span>
+                    </a>
+                </li>
+                @*<li>
+                    <a href='@Url.Action("ChangePassword", "Manage")'>
+                        <i class="fa fa-cogs">&nbsp;&nbsp;</i>
+                        <span class="hidden-xs hidden-sm">Alterar Senha (antigo)</span>
+                    </a>
+                </li>*@
+            </ul>
+        </li>
+       
+        
+    </ul>
+ 
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href='@Url.Action("Register", "Account")' id="registerLink">
+                <i class="fa fa-user-plus"></i>
+                <span class="hidden-xs hidden-sm">
+                   Cadastrar
+                </span>
+            </a>
+
+        </li>
+        <li>
+            <a href='@Url.Action("Login", "Account")' id="loginLink">
+                <i class="fa fa-sign-in"></i>
+                <span class="hidden-xs hidden-sm">
+                    Entrar
+                </span>
+            </a>
+        </li>
+    </ul>
+}

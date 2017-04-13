@@ -1,0 +1,185 @@
+﻿@{
+    int _status = @ViewBag.Status;
+    int _countRetornoErro = 0;
+}
+
+@if (Model.QtdPastaMovida > 0 || Model.QtdArquivoMovido > 0)
+{
+    string _msgSucesso = "";
+    string _msgSucessoComplemento = "";
+    string _caminhoDestino = Model.CaminhoAtualDestino;
+    string[] arrayCaminhoDestino = null;
+    int countDir = 0;
+    
+    
+
+    if (_caminhoDestino == "/")
+    {
+        _caminhoDestino = "<ul class='jqueryFileTree'><li class='directory expanded' style='color:#333; font-size:14px; font-weight: bold;'>[photoCloud:]</li></ul>";
+    }
+    else
+    {
+        arrayCaminhoDestino = _caminhoDestino.Split('/');
+        _caminhoDestino = "";
+        for (countDir = 0; countDir <= arrayCaminhoDestino.Length - 2; countDir++)
+        {
+            _caminhoDestino = _caminhoDestino + "    <ul class='jqueryFileTree'>";
+            if (countDir > 0)
+            {
+                if (countDir == arrayCaminhoDestino.Length - 2)
+                {
+                    _caminhoDestino = _caminhoDestino + "       <li class='directory expanded' style='color:#333; font-size:14px; font-weight: bold;'>";
+                }
+                else
+                {
+                    _caminhoDestino = _caminhoDestino + "       <li class='directory expanded'>";
+                }
+            }
+            else
+            {
+                _caminhoDestino = _caminhoDestino + "       <li>";
+                
+            }
+            
+            
+            _caminhoDestino = _caminhoDestino +            arrayCaminhoDestino[countDir];
+
+
+        }
+        for (countDir = 0; countDir <= arrayCaminhoDestino.Length - 2; countDir++)
+        {
+            _caminhoDestino = _caminhoDestino + "       </li>";
+            _caminhoDestino = _caminhoDestino + "   </ul>";
+        }      
+        
+    }
+    _msgSucesso = "<strong>";
+    if (Model.QtdPastaMovida > 0)
+    {
+        if (Model.QtdPastaMovida == 1)
+        {
+            _msgSucesso = _msgSucesso + Model.QtdPastaMovida + " pasta";
+            _msgSucessoComplemento = " movida";
+        }
+        else{
+            _msgSucesso = _msgSucesso + Model.QtdPastaMovida + " pastas";
+            _msgSucessoComplemento = " movidas";
+        }
+        if (Model.QtdArquivoMovido > 0)
+        {
+            if (Model.QtdArquivoMovido == 1)
+            {
+                _msgSucesso = _msgSucesso + " e " + Model.QtdArquivoMovido + " arquivo";
+                 _msgSucessoComplemento = " movidos";
+            }
+            else
+            {
+                _msgSucesso = _msgSucesso + " e " + Model.QtdArquivoMovido + " arquivos";
+                _msgSucessoComplemento = " movidos";
+            } 
+        }
+        _msgSucesso = _msgSucesso + "</strong>";
+        _msgSucesso = _msgSucesso + _msgSucessoComplemento + " com sucesso para:<hr style='margin: 2px 0;'>";
+    }else if (Model.QtdArquivoMovido > 0)
+    {
+        if (Model.QtdArquivoMovido == 1)
+        {
+            _msgSucesso = "<strong>" + Model.QtdArquivoMovido + " arquivo </strong> movido com sucesso para:<hr style='margin: 2px 0;'>";
+        }
+        else
+        {
+            _msgSucesso = "<strong>" + Model.QtdArquivoMovido + " arquivos </strong> movidos com sucesso para:<hr style='margin: 2px 0;'>";
+        }
+    }
+   // _msgSucesso = _msgSucesso + " <strong>" + _caminhoDestino + " </strong>";
+    _msgSucesso = _msgSucesso  + _caminhoDestino;
+    
+    <div class="alert alert-success" role="alert" id="modal_alert_moverpastaarquivo">@Html.Raw(@_msgSucesso) <hr style='margin: 2px 0;'></div>
+}
+else
+{
+    if (_status < 0)
+    {
+        <div class="alert alert-danger" role="alert" id="modal_alert_moverpastaarquivo">
+            @Html.Raw(@ViewBag.Message)
+        </div>
+    }
+    else if (_status > 0)
+    {
+    <div class="alert alert-warning" role="alert" id="modal_alert_moverpastaarquivo">
+        @Html.Raw(@ViewBag.Message)
+    </div>
+    }
+}
+            <input type="hidden" name="hidCaminhoPastaPai" id="hidCaminhoPastaPai" value="@Model.CaminhoPastaPai" />
+            <input type="hidden" name="hidCaminhoRetorno" id="hidCaminhoRetorno" value="@ViewBag.CaminhoRetorno" />
+            <input type="hidden" name="hidDirBase" id="hidDirBase" value="@ViewBag.DirBase" />
+            <input type="hidden" name="hidJsonMovidos" id="hidJsonMovidos" value="@ViewBag.JsonMovidos" />
+            @*@Model.QtdArquivoMovido <br />
+                @Model.QtdPastaMovida<br />
+                @Model.CaminhoAtualDestino<br />
+                @Model.CaminhoRetorno<br />
+                @Model.EstadoPasta<br />*@
+           <div style="overflow-y:auto; width:100%;height:400px;">
+                @foreach (NewPhotoCloud.Models.MoverPastaArquivo dir in Model.ListaMoverPastasArquivos)
+                {
+
+                    var _tipoDescricao = "";
+                    if (dir.TipoArquivoPasta == 'D')
+                    {
+                        _tipoDescricao = "as duas pastas";
+                    }
+                    else if (dir.TipoArquivoPasta == 'A')
+                    {
+                        _tipoDescricao = "os dois arquivos";
+                    }
+
+                    if (dir.StatusRetorno < 0)
+                    {
+
+                        <div class="alert alert-danger" role="alert" id="modal_alert_moverpastaarquivo@_countRetornoErro">
+                            @Html.Raw(@dir.MensagemsRetorno)
+                        </div>
+                    }
+                    else if (dir.StatusRetorno > 0)
+                    {
+                        <div class="alert alert-warning warning_movereturn" role="alert" id="modal_alert_moverpastaarquivo@_countRetornoErro">
+                            @Html.Raw(@dir.MensagemsRetorno)
+                            <div class="row">
+                                <div class="col-md-4" style="padding:2px; border:1px none #ff0000">
+                                    <button type="button" id="btn_moversubistituir_@_countRetornoErro" data-loading-text="Aguarde..." class="btn btn-warning btn-block btn-sm btn_moversubistituir" autocomplete="off" title="Mover e Substituir">
+                                        Mover e Substituir
+                                    </button>
+                                </div>
+                                <div class="col-md-3" style="padding:2px; border:1px none #ff0000">
+                                    <button type="button" id="btn_naomover_@_countRetornoErro" data-loading-text="Aguarde..." class="btn btn-photocloud btn-block btn-sm btn_naomover" autocomplete="off" title="Não Mover">
+                                        Não Mover
+                                    </button>
+                                </div>
+                                <div class="col-md-5" style="padding:2px; border:1px none #ff0000">
+                                    <button type="button" style="padding:5px 5px;" id="btn_movermanter_@_countRetornoErro" data-loading-text="Aguarde..." class="btn btn-photocloud btn-block btn-sm btn_movermanter" autocomplete="off" title=" mover, mas manter @_tipoDescricao ">
+                                        Mover, mas manter @_tipoDescricao
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    _countRetornoErro++;
+                }
+
+
+            </div>
+<script>
+  //  $(document).ready(function () {
+        //   JsonMoverCopiarPara.listaMoverPastasArquivos = JSON.stringify(Html.Raw(Json.Encode(Model)));
+  //      console.log("retorno");
+  //      console.log(JSON.stringify(#Html.Raw(Json.Encode(Model))));
+  //      alert(JsonMoverCopiarPara);
+        //   localStorage["retornoPastaArquivoMovidos"] = JSON.stringify(*Html.Raw(Json.Encode(Model)));
+        //   parent.fnCriarJsonMoverCopiarPara(arrouba Html.Raw(Json.Encode(Model)));
+        // sessionStorage["retornoPastaArquivoMovidos"] = JSON.stringify(*Html.Raw(Json.Encode(Model)));
+
+        //   var cars = JSON.parse(localStorage["mycars"]);
+
+  //  });
+</script>

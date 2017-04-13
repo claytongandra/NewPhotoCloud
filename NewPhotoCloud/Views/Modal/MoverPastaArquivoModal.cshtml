@@ -1,0 +1,83 @@
+﻿@{
+    var _nomeArquivoPasta = ""; //ViewData["nomeArquivoPasta"];
+    var _caminhoCompleto = "";//ViewData["caminhoCompleto"];
+    //var _caminhoRetorno = "";//ViewData["caminhoRetorno"];
+    string _tipo = "";//ViewData["tipoArquivoPasta"].ToString();
+    string _labelBotaoMover = "";
+    if (_tipo == "D")
+    {
+        _labelBotaoMover = "pasta";
+    }
+    else if (_tipo == "A")
+    {
+        _labelBotaoMover = "arquivo";
+    }
+}
+
+@using (Html.BeginForm("MoverPastaArquivo", "GerenciarPastaArquivo", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "form_moverarquivopasta" }))
+{ 
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+
+        <div class="col-md-7">
+            <div class="input-group">
+                <div id="content-menutree_mover" style="height:200px; width:540px; overflow-y:auto; border:1px none #ccc; padding:10px;">
+                    
+                    <ul class="jqueryFileTree" style="">
+                        <li class="filetreemovercopiar directory expanded">
+                            <a href="#" url="/" data-caminho="/">[photoCloud:]</a>
+                            <ul class="jqueryFileTree" style="">
+                                @foreach (NewPhotoCloud.Models.ListaDiretorios dir in Model.listaDiretorio)
+                                {
+
+                                    dir.Diretorio = dir.Diretorio + dir.DiretorioNome + "/";
+
+                                    <li class="filetreemovercopiar directory collapsed">
+                                        <a href="#" url="@dir.Diretorio" data-caminho="@dir.Diretorio">@dir.DiretorioNome</a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            @*Nome Pasta:<input type="text" name="hidNomePastaArquivo" id="hidNomePastaArquivo" value="@_nomeArquivoPasta" style="width:350px;" />
+            Caminho Original:<input type="text" name="hidCaminhoOriginal" id="hidCaminhoOriginal" value="@_caminhoCompleto" style="width:350px;" />*@
+            @*Caminho Destino:*@<input type="hidden" name="hidCaminhoDestino" id="hidCaminhoDestino" value="" style="width:350px;" />
+            @*Caminho Retorno:<input type="text" name="hidCaminhoRetorno" id="hidCaminhoRetorno" value="@_caminhoRetorno" style="width:350px;" />
+            Tipo:<input type="text" name="hidTipoPastaArquivo" id="hidTipoPastaArquivo" value="@_tipo" style="width:350px;" />*@
+
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        @*<ul id="container_nomepastadestino" class="nav nav-pills nav-stacked" style="margin-bottom:18px; padding:4px 7px; display:none;">*@
+        <ul id="container_nomepastadestino" class="nav nav-pills nav-stacked" style="margin-bottom:20px; display:none;">
+            <li role="presentation">
+                <a href="#" style="color: #333; font-size:16px; padding: 15px; ">Mover para: <strong id="lbl_nomepasta_mover">Selecione uma pasta acima</strong></a>
+            </li>
+        </ul>
+        <div id="wrapper_alertmover">
+            <div id="container_alertmover" class="alert alert-info" role="alert">
+                @*<div id="alertmover_content"><span style='font-size:40px;float:left;clear:left;margin:0 10px 0 0;' class='fa fa-info-circle'></span> <p>Selecione a pasta de destino acima.</p></div>*@
+                <div id="alertmover_content">Selecione a pasta de destino acima.</div>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-6">
+            <button type="submit" id="btn_moverpastaarquivo" class="btn btn-default btn-photocloud btn-block disabled" data-loading-text="Aguarde...">
+                <span class="glyphicon glyphicon-transfer" style="font-size:15px;">&nbsp;</span>
+                Mover @_labelBotaoMover
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button type="button" id="btn_criarPasta_mover" data-loading-text="Aguarde..." class="btn btn-default btn-block disabled" autocomplete="off" title="Criar Pasta" data-nome="@_nomeArquivoPasta" rel="@_caminhoCompleto">
+                <span class="fa fa-folder-open-o" style="font-size:15px;">&nbsp;</span>
+                Criar Pasta
+            </button>
+        </div>
+    </div>
+
+}

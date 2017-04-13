@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="ISO-8859" />
+	<meta http-equiv="x-ua-compatible" content="IE=9" >
+	<title>Modal Bootstrap</title>
+    <script src="Scripts/jquery-1.11.3.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/dialogs.js"></script>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+	<style>
+		#div_container{margin-top: 60px;}
+	</style>
+</head>
+
+<body>
+<nav class="nav navbar-fixed-top navbar-inverse">
+	<div class="container">
+		<a href="<%=Request.ServerVariables("SCRIPT_NAME")%>" class="navbar-brand">Modal Bootstrap</a>
+	</div>
+</nav>
+<div class="container" id="div_container">
+	<div class="row">
+		<h2>IFrame</h2>
+		<button class="btn btn-default" id="bt_iframe_extrapequeno"><span class="glyphicon glyphicon-comment"></span> extrapequeno + 100px</button>
+		<button class="btn btn-default" id="bt_iframe_pequeno"><span class="glyphicon glyphicon-comment"></span> pequeno + 250px</button>
+		<button class="btn btn-default" id="bt_iframe_medio"><span class="glyphicon glyphicon-comment"></span> medio + 350px</button>
+		<button class="btn btn-default" id="bt_iframe_grande"><span class="glyphicon glyphicon-comment"></span> grande + 450px</button>
+		<br /><br />
+		<button class="btn btn-default" id="bt_iframe_extragrande"><span class="glyphicon glyphicon-comment"></span> extragrande + 100pc + Título</button>
+		<button class="btn btn-default" id="bt_iframe_personalizado"><span class="glyphicon glyphicon-comment"></span> personalizado|400px + 400px</button>
+		<button class="btn btn-default" id="bt_iframe_funcoes"><span class="glyphicon glyphicon-comment"></span> Travar Fundo + Funções</button>
+	</div>
+	<div class="row">
+		<br />
+		<div class="well well-sm">
+			<p><b>fnModal_IFrame(vjsIdModal, vjsTitulo, vjsUrl, vjsLargura, vjsAltura, vjsTravar, vjsFnAoAbrir, vjsFnAoFechar);</b></p>
+			<p>fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-extrapequeno', '150px');</p>
+			<p>fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-pequeno', '250px');</p>
+			<p>fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-medio', '350px');</p>
+			<p>fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-grande', '450px');</p>
+			<p>fnModal_IFrame("modalIFrame", "TÍTULO DO MODAL", vjsUrl, 'modal-extragrande', '100pc');</p>
+			<p>fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-personalizado|400px', '400px');</p>
+			<p>fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-grande', '', 'S', fnAbrir, fnFechar);</p>
+		</div>
+	</div>
+	<div class="row">
+		<h2>Div HTML</h2>
+		<button class="btn btn-default" id="bt_divhtml_medio"><span class="glyphicon glyphicon-comment"></span> medio + 250px</button>
+	</div>
+	<div class="row">
+		<br />
+		<div class="well well-sm">
+			<p><b>fnModal_DivHtml(vjsIdModal, vjsTitulo, vjsHtml, vjsLargura, vjsAltura, vjsTravar, vjsFnAoAbrir, vjsFnAoFechar);</b></p>
+			<p>fnModal_DivHtml("modalDivHtml", "", "TAGS_HTML", 'modal-medio', '250px', 'S');</p>
+		</div>
+	</div>
+	<div class="row">
+		<h2>Div URL</h2>
+		<button class="btn btn-default" id="bt_divurl_pequeno"><span class="glyphicon glyphicon-comment"></span> pequeno + 200px</button>
+		<button class="btn btn-default" id="bt_divurl_grande"><span class="glyphicon glyphicon-comment"></span> grande + 400px + FnAbrir + FnFechar</button>
+		<button class="btn btn-danger" id="bt_divurl_extragrande"><span class="glyphicon glyphicon-comment"></span> extragrande + 450px + FnErro + FnFinal</button>
+	</div>
+	<div class="row">
+		<br />
+		<div class="well well-sm">
+			<p><b>fnModal_DivURL(vjsIdModal, vjsTitulo, vjsUrl, vjsLargura, vjsAltura, vjsTravar, vjsFnAoAbrir, vjsFnAoFechar, vjsFnErro, vjsFnFinal);</b></p>
+			<p>fnModal_DivURL("modalDivUrl", "", vjsUrl, 'modal-pequeno', '200px', 'S');</p>
+			<p>fnModal_DivURL("modalDivUrl", "", vjsUrl, 'modal-grande', '400px', 'N', fnAbrir, fnFechar);</p>
+			<p>fnModal_DivURL("modalDivUrl", "", vjsUrl, 'modal-extragrande', '400px', 'N', '', '', fnErro, fnFinal);</p>
+		</div>
+	</div>
+	<div class="row">
+		<h2>Confirm</h2>
+		<button class="btn btn-default" id="bt_confirm"><span class="glyphicon glyphicon-comment"></span> Padrão</button>
+		<button class="btn btn-default" id="bt_confirm_texto"><span class="glyphicon glyphicon-comment"></span> Texto + Função Sim</button>
+		<button class="btn btn-default" id="bt_confirm_fechar"><span class="glyphicon glyphicon-comment"></span> Função Sim + Função Não + Função Fechar</button>
+	</div>
+	<div class="row">
+		<br />
+		<div class="well well-sm">
+			<p><b>fnModal_Confirm(vjsIdModal, vjsMensagem, vjsFnAoConfirmar, vjsFnAoFechar);</b></p>
+			<p>fnModal_Confirm("modalConfirm", 'Modal Confirm');</p>
+			<p>fnModal_Confirm("modalConfirm", "Lorem Ipsun...", fnSim);</p>
+			<p>fnModal_Confirm("modalConfirm", 'Modal Confirm + Função Fechar', fnSim, fnNao, fnFechar);</p>
+		</div>
+	</div>
+	<div class="row">
+		<h2>Alert</h2>
+		<button class="btn btn-default" id="bt_alert"><span class="glyphicon glyphicon-comment"></span> Padrão</button>
+		<button class="btn btn-primary" id="bt_alert_info"><span class="glyphicon glyphicon-comment"></span> Info</button>
+		<button class="btn btn-warning" id="bt_alert_exclamation"><span class="glyphicon glyphicon-comment"></span> Exclamation</button>
+		<button class="btn btn-danger" id="bt_alert_error"><span class="glyphicon glyphicon-comment"></span> Error + Função Fechar</button>
+	</div>
+	<div class="row">
+		<br />
+		<div class="well well-sm">
+			<p><b>fnModal_Alert(vjsIdModal, vjsIcone, vjsMensagem, vjsFnAoFechar);</b></p>
+			<p>fnModal_Alert('modalAlert', '', 'Modal Alert');</p>
+			<p>fnModal_Alert('modalAlert', 'info', 'Modal Alert Info');</p>
+			<p>fnModal_Alert('modalAlert', 'exclamation', 'Modal Alert Exclamation');</p>
+			<p>fnModal_Alert('modalAlert', 'error', 'Modal Alert Error + Função Fechar', fnFechar);</p>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		/* MODAL IFRAME */
+		/* ---------------------------------------------------------------------------------------- */
+		$("#bt_iframe_extrapequeno").click(function () {
+			var vjsUrl = 'exemplos_modal_iframe.asp';
+			fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-extrapequeno', '150px');
+		});
+		$("#bt_iframe_pequeno").click(function () {
+			var vjsUrl = 'exemplos_modal_iframe.asp';
+			fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-pequeno', '250px');
+		});
+		$("#bt_iframe_medio").click(function () {
+			var vjsUrl = 'exemplos_modal_iframe.asp';
+			fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-medio', '350px');
+		});
+		$("#bt_iframe_grande").click(function () {
+			var vjsUrl = 'exemplos_modal_iframe.asp';
+			fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-grande', '450px');
+		});
+		$("#bt_iframe_extragrande").click(function () {
+			var vjsUrl = 'exemplos_modal_iframe.asp';
+			fnModal_IFrame("modalIFrame", "TÍTULO DO MODAL", vjsUrl, 'modal-extragrande', '100pc');
+		});
+		$("#bt_iframe_personalizado").click(function () {
+			var vjsUrl = 'exemplos_modal_iframe.asp';
+			fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-personalizado|400px', '400px');
+		});
+		$("#bt_iframe_funcoes").click(function () {
+			var vjsUrl = 'exemplos_modal_iframe.asp';
+			fnModal_IFrame("modalIFrame", "", vjsUrl, 'modal-grande', '', 'S', function () { alert('Função ao abrir'); }, function () { alert('Função ao fechar'); });
+		});
+		/* ---------------------------------------------------------------------------------------- */
+
+		/* MODAL DIVHTML */
+		/* ---------------------------------------------------------------------------------------- */
+		$("#bt_divhtml_medio").click(function () {
+			var vjsHtml = '<h1>H1 Conteúdo Html</h1>';
+			vjsHtml += '<br /><span class="label label-primary">Span Conteúdo Html</span>';
+			vjsHtml += '<br /><div class="alert alert-success">Div Conteúdo Html</div>';
+
+			fnModal_DivHtml("modalDivHtml", "", vjsHtml, 'modal-medio', '250px', 'S');
+		});
+		/* ---------------------------------------------------------------------------------------- */
+
+		/* MODAL DIVURL */
+		/* ---------------------------------------------------------------------------------------- */
+		$("#bt_divurl_pequeno").click(function () {
+			var vjsUrl = 'exemplos_modal_url.asp';
+			fnModal_DivURL("modalDivUrl", "", vjsUrl, 'modal-pequeno', '200px', 'S');
+		});
+		$("#bt_divurl_grande").click(function () {
+			var vjsUrl = 'exemplos_modal_url.asp';
+			fnModal_DivURL("modalDivUrl", "", vjsUrl, 'modal-grande', '400px', 'N', fnAbrir, fnFechar);
+
+			function fnAbrir() {
+				alert('fnAbrir()');
+			}
+			function fnFechar() {
+				alert('fnFechar()');
+			}
+		});
+		$("#bt_divurl_extragrande").click(function () {
+			var vjsUrl = 'exemplos_modal_url_.asp';
+			fnModal_DivURL("modalDivUrl", "", vjsUrl, 'modal-extragrande', '400px', 'N', '', '', fnErro, fnFinal);
+
+			function fnErro() {
+				alert('fnErro()');
+			}
+			function fnFinal() {
+				alert('fnFinal()');
+			}
+		});
+		/* ---------------------------------------------------------------------------------------- */
+
+		/* MODAL CONFIRM */
+		/* ---------------------------------------------------------------------------------------- */
+		$("#bt_confirm").click(function () {
+			fnModal_Confirm("modalConfirm", 'Modal Confirm');
+		});
+		$("#bt_confirm_texto").click(function () {
+			var vjsTexto = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa.";
+			fnModal_Confirm("modalConfirm", vjsTexto, function () { alert('Sim') });
+		});
+		$("#bt_confirm_fechar").click(function () {
+			fnModal_Confirm("modalConfirm", 'Modal Confirm + Função Fechar', function () { alert('Sim') }, function () { alert('Não') }, function () { alert('Fechar') });
+		});
+		/* ---------------------------------------------------------------------------------------- */
+
+		/* MODAL ALERT */
+		/* ---------------------------------------------------------------------------------------- */
+		$("#bt_alert").click(function () {
+			fnModal_Alert('modalAlert', '', 'Modal Alert');
+		});
+		$("#bt_alert_info").click(function () {
+			fnModal_Alert('modalAlert', 'info', 'Modal Alert Info');
+		});
+		$('#bt_alert_exclamation').click(function () {
+			fnModal_Alert('modalAlert', 'exclamation', 'Modal Alert Exclamation');
+		});
+		$('#bt_alert_error').click(function () {
+			fnModal_Alert('modalAlert', 'error', 'Modal Alert Error + Função Fechar', function () { alert('Alert Fechar'); });
+		});
+		/* ---------------------------------------------------------------------------------------- */
+	});
+</script>
+</body>
+</html>

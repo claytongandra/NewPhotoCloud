@@ -1,0 +1,668 @@
+﻿@using System;
+@using System.IO;
+@{
+    
+    var _pastaAtual = @ViewData["pastaAtual"];
+    var _diretorioAtual = @ViewData["diretorioAtual"];
+    var _diretorioPai = @ViewData["diretorioPai"];
+    var _cookieViewGridListHash = @ViewData["cookieViewGridListHash"];
+    
+    var _breadcrumbUrl = "";
+    var _breadcrumb = (string[])ViewData["breadcrumb"];
+    
+    string _viewgridlist = @ViewData["viewgridlist"].ToString();
+
+    string _galleryPrettyPhotoList = "";
+    int _positionGalleryPrettyPhoto = 0;
+        
+    string _classBotaoGrid = "";
+    string _classBotaoList = "";
+    string _iconFolder = "";
+    string _iconFile = "";
+    string _iconFolderTitle = "";
+    
+    int _qtdPastasPastaAberta = 0;
+    int _qtdArquivosPastaAberta = 0;
+
+    int _qtdCheckboxPastas = 0;
+    int _qtdCheckboxArquivos = 0;
+}
+@if (_viewgridlist == "lista")
+{
+    _classBotaoGrid = "";
+    _classBotaoList = "active";
+}
+else
+{
+    _classBotaoGrid = "active";
+    _classBotaoList = "";
+}
+<input type="hidden" name="hidDiretorioPai" id="hidDiretorioPai" value="@_diretorioPai" />
+<input type="hidden" name="hidDiretorioAtual" id="hidDiretorioAtual" value="@_diretorioAtual" />
+
+
+<div class="row">
+    <ul class="nav" id="container_breadcrumb" style="background-color: #DFDFE0; padding:4px;">
+
+        <li>
+            <div class="dropdown" style="float:left;">
+                @{
+                    string disabled = "";
+                    if (@_pastaAtual == "[photoCloud:]")
+                    {
+                        disabled = "disabled";
+                    }
+                }
+                <button class="btn btn-default dropdown-toggle @disabled" type="button" id="dropdownPastaAtual" data-toggle="dropdown" data-caminho="@_diretorioAtual" aria-haspopup="true" aria-expanded="true">
+                    <i class="fa fa-folder-open"></i>
+                    @_pastaAtual
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownPastaAtual">
+                    <li><a tabindex="-1" href="#" id="breadcrumb_recarregar" data-caminho="@_diretorioAtual"><i class="fa fa-refresh">&nbsp;&nbsp;</i>Recarregar</a></li>
+                    <li><a href="#" id="breadcrumb_renomear" data-toggle="modal" data-target="#modalBootstrap" data-whatever="@_pastaAtual" data-estadopasta="aberta" data-caminho="@_diretorioAtual"><i class="fa fa-pencil">&nbsp;&nbsp;</i>Renomear</a></li>
+                    <li><a href="#" id="breadcrumb_moverpara" data-toggle="modal" data-target="#modalBootstrap" data-nome="@_pastaAtual" data-estadopasta="aberta" data-tipo="D" data-caminho="@_diretorioAtual"><i class=" fa fa-arrows">&nbsp;&nbsp;</i>Mover Para</a></li>
+                    <li><a href="#" class="btn disabled" style="text-align: left;"><i class="fa fa-files-o">&nbsp;&nbsp;</i>Copiar Para</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#" id="breadcrumb_excluir" data-whatever="@_pastaAtual" data-caminho="@_diretorioAtual" data-caminhopastapai="@_diretorioPai" data-tipo="D"><i class="fa fa-trash">&nbsp;&nbsp;</i>Excluir</a></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <ul id="menuhorizontal" class="nav navbar-nav"></ul>
+
+        </li>
+       
+        <li>
+            <ul class="breadcrumb" id="breadcrumb_list">
+                @{
+                    int _cont = 0;
+                    if (_breadcrumb != null)
+                    {
+                        foreach (string atalho in _breadcrumb)
+                        {
+                            if (_pastaAtual.ToString() != atalho.ToString())
+                            {
+                                _cont++;
+                                _breadcrumbUrl = _breadcrumbUrl + @atalho + "/";
+                                <li data-tooltip="" data-placement="top" title="@atalho"><a href="#" rel="/@_breadcrumbUrl"><i class="fa fa-folder">&nbsp;</i>@atalho</a></li>
+                            }
+                        }
+                        if (_cont > 0)
+                        {
+                            <li><i class="fa fa-folder-open">&nbsp;</i><strong>@_pastaAtual</strong></li>
+                        }
+                    }
+                }
+            </ul>
+        </li>
+         <li>
+            <ul id="menuListGridView" class="nav navbar-nav">
+                <li>
+                    <div class="btn-group">
+                        <button type="button" id="lista" class="btn btn-default @_classBotaoList" title="Lista" data-tooltip="false" data-hash="@_cookieViewGridListHash"><i class="glyphicon glyphicon-th-list"></i><span class="short">Lista</span></button>
+                        <button type="button" id="grid" class="btn btn-default @_classBotaoGrid" title="Tabela" data-tooltip="false" data-hash="@_cookieViewGridListHash"><i class="glyphicon glyphicon-th"></i><span class="short">Tabela</span></button>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+@{
+
+    _qtdPastasPastaAberta = Model.listaDiretorio.Count;
+    _qtdArquivosPastaAberta = Model.listaArquivo.Count;
+
+}
+@if (_qtdPastasPastaAberta == 0 && _qtdArquivosPastaAberta == 0)
+{
+    <div id="container_principallista" data-titulopasta="@_pastaAtual" data-caminhopasta="@_diretorioAtual">
+        <div class="row" id="container_pastavazia">
+            <br />
+            <h4>A pasta <strong>@_pastaAtual</strong> está vazia.</h4>
+            <hr />
+            <div class="row">
+                <div class="col-md-12" style="border:1px none #ff0000;">
+                    <img src="~/Content/pho_images/phoimg_icones/folder_empty_circle.png" />
+                </div>
+            </div>
+            <div class="row " style="min-width:500px;">
+                <div class=" col-md-12" style="border:1px none #ff0000;">
+                    <div class="col-md-6" style="border:1px none #ff0000;">
+                        <button type="button" id="btn_criarPasta" data-loading-text="Loading..." class="btn btn-default btn-photocloud btn-block notContext" autocomplete="off" title="Criar Pasta" data-toggle="modal" data-target="#modalBootstrap" data-whatever="@_pastaAtual" rel="@_diretorioAtual">
+                            <span class="fa fa-folder-open-o" style="font-size:15px;">&nbsp;</span>
+                            Criar Pasta
+                        </button>
+                    </div>
+
+                    <div class="col-md-6" style="border:1px none #ff0000;">
+                        <button type="button" id="btn_carregarArquivos" data-loading-text="Loading..." class="btn btn-default btn-photocloud btn-block notContext" autocomplete="off" title="Carregar Arquivos" rel="@_diretorioAtual">
+                            <span class="fa fa-upload">&nbsp;</span>
+                            Carregar Arquivos
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div><!--row -->
+    </div><!--container_principallista -->
+        <script>
+            $('#grid').removeClass('active').addClass('disabled');
+            $('#lista').removeClass('active').addClass('disabled');
+        </script>
+}
+else
+{
+    <div id="container_principallista" data-titulopasta="@_pastaAtual" data-caminhopasta="@_diretorioAtual" data-view="@_viewgridlist">
+
+
+
+        @if (_qtdPastasPastaAberta > 0)
+        {
+            <div class="row" id="container_listadiretorio">
+                <div class="col-md-12 container_header_lista @_viewgridlist">
+                    <div id="header_lista" class="header_lista">
+                        <div id="header_lista_icon" class="col-md-1">
+                            <div class=" checkbox checkbox-info checkbox-circle conteiner_checkbox_all">
+                                @*data-tooltip="true" data-placement="right" title="Selecionar Todos"*@
+                                <input type="checkbox" name="checkboxAll" id="checkboxAll" class="notContext" value="" data-view="@_viewgridlist" data-qtdcheckitem="@(_qtdPastasPastaAberta + _qtdArquivosPastaAberta)">
+                                <label for="checkbox">
+
+                                </label>
+                            </div>
+                        </div>
+                        <div id="header_lista_titulo" class="col-md-6">
+                            Nome
+                        </div>
+                        <div id="header_lista_tipo" class="col-md-2">
+                            Tipo
+                        </div>
+                        <div id="header_lista_conteudo" class="col-md-3">
+                            Conteúdo
+                        </div>
+                    </div>
+                </div>
+                @foreach (NewPhotoCloud.Models.ListaDiretorios dir in Model.listaDiretorio)
+                {
+                    _qtdCheckboxPastas++;
+
+                    int _qtdArquivos = 0;
+                    int _qtdPastas = 0;
+                    //string _qtdpastas_font = "";
+                    //string _textpastas_font = "";
+
+                    string _caminhoRealMini = Server.MapPath("~/pho_fotos_miniatura/" + dir.DiretorioBase + "/" + dir.Diretorio.Replace(@"//", @"/"));
+                    string _caminhoReal = Server.MapPath("~/pho_fotos/" + dir.DiretorioBase + "/" + dir.Diretorio.Replace(@"//", @"/"));
+
+                    List<string> subDiretorioListaModel = new List<string>();
+                    if (System.IO.Directory.Exists(_caminhoReal))
+                    {
+
+                        IEnumerable<string> subDiretoriosLista = Directory.EnumerateDirectories(_caminhoReal);
+                        foreach (string subDir in subDiretoriosLista)
+                        {
+
+                            DirectoryInfo subDiretorioInfo = new DirectoryInfo(subDir);
+
+                            subDiretorioListaModel.Add(subDiretorioInfo.Name.ToString());
+
+                            _qtdPastas++;
+                        }
+
+                    }
+
+                    List<NewPhotoCloud.Models.ListaArquivos> arquivosListaModel = new List<NewPhotoCloud.Models.ListaArquivos>();
+                    if (System.IO.Directory.Exists(_caminhoReal))
+                    {
+                        IEnumerable<string> subFileList = Directory.EnumerateFiles(_caminhoReal);
+
+                        foreach (string arq in subFileList)
+                        {
+                            NewPhotoCloud.Models.ListaArquivos arquivosModel = new NewPhotoCloud.Models.ListaArquivos();
+
+                            FileInfo a = new FileInfo(arq);
+
+                            arquivosModel.ArquivoDiretorio = "pho_fotos_miniatura" + "/" + dir.DiretorioBase + dir.Diretorio.Replace(@"//", @"/") + Path.GetFileName(arq);
+                            arquivosModel.ArquivoExtensao = a.Extension.ToLower();
+
+                            arquivosListaModel.Add(arquivosModel);
+                            _qtdArquivos++;
+                        }
+                    }
+
+
+
+
+                    @*==== Lista as pastas do diretorio atual ==== *@
+                    <div class="item col-md-3 container_folders_grid @_viewgridlist" style="border:1px none #ffd800; padding:3px">
+                        <div class="folders">
+                            <a href="#" data-caminho="@dir.Diretorio.Replace(@"//", @"/")">
+                                <div class="checkbox checkbox-info checkbox-circle conteiner_checkbox_grid">
+                                    <input type="checkbox" name="checkboxFolders" id="checkbox_foldergrid_@_qtdCheckboxPastas" class="circlecheckbox checkbox_foldergrid notContext" value="@dir.Diretorio.Replace(@"//", @"/")" data-nome="@dir.DiretorioNome" data-tipo="D" data-view="grid" data-setviewchange="#checkbox_folderlista_@_qtdCheckboxPastas">
+                                    <label for="checkbox">
+
+                                    </label>
+                                </div>
+
+                                <div class="folders_slide">
+
+                                    @{
+                    int _qtdSlide = 0;
+                    string _classeImagemVideo;
+                    int _qtdImagesForSlide = arquivosListaModel.Count;
+                    string _styleFoldersPanel = "";
+
+                    foreach (NewPhotoCloud.Models.ListaArquivos arq in arquivosListaModel)
+                    {
+                        string _estencao = arq.ArquivoExtensao;
+                        string _diretorioArquivo = "";
+                        _classeImagemVideo = "folders_panel_img";
+                        _diretorioArquivo = arq.ArquivoDiretorio;
+
+                        switch (arq.ArquivoExtensao.ToLower())
+                        {
+                            case ".mpg":
+                                _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                                _classeImagemVideo = "folders_panel_imgvideo";
+                                break;
+                            case ".wmv":
+                                _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                                _classeImagemVideo = "folders_panel_imgvideo";
+                                break;
+                            case ".mp4":
+                                _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                                _classeImagemVideo = "folders_panel_imgvideo";
+                                break;
+
+                        }
+                        if (_qtdImagesForSlide == 1)
+                        {
+                            _styleFoldersPanel = " style=display:block;";
+                        }
+                        <div id="slide-@dir.DiretorioNome@_qtdSlide" class="folders_panel" @_styleFoldersPanel>
+                            <img class="@_classeImagemVideo" alt="" src="@_diretorioArquivo" style="width:100%;" />
+                        </div>
+                        if (_qtdSlide >= 4)
+                        {
+                            break;
+                        }
+                        _qtdSlide++;
+                        _styleFoldersPanel = "";
+                    }
+                                    }
+
+                                    @{
+                    if (_qtdArquivos == 0 && _qtdPastas == 0)
+                    {
+                        <img alt="" src="Content/pho_images/phoimg_botoes/imgbtn_folderempty_aero.png" />
+                    }
+                    else if (_qtdArquivos == 0 && _qtdPastas > 0)
+                    {
+                        <img alt="" src="Content/pho_images/phoimg_botoes/imgbtn_foldercameralogo_aero.png" />
+                    }
+                                    }
+                                </div><!--folders_slide-->
+                            </a>
+
+
+
+                            <div class="folder_titulo">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href='#' id="titulofolder_aba" data-caminho="@dir.Diretorio.Replace(@"//", @"/")">
+                                    <div class="ItemTile-folderBeak" style="right: 30%;width: 18px;height: 20px;position: absolute;top: -16px;overflow: hidden;display: block;background-color: #333; border-left:1px solid #fff; -webkit-user-select: none; -webkit-transform-origin: top left;  -ms-transform-origin: top left;  transform-origin: top left;  -webkit-transform: rotate(40deg);  -ms-transform: rotate(40deg);  transform: rotate(40deg); "></div>
+                                    <div class="ItemTile-folderBeakHighlight" style="right: 29%;  width: 20px;  height: 18px; position: absolute;top: -16px;overflow: hidden;display: block;white-space: nowrap;  background-color: #333; border-top:1px solid #fff; -webkit-user-select: none;"></div>
+                                    <div class="folder_aba">
+                                        @if (_qtdArquivos == 0 && _qtdPastas == 0)
+                                        {
+                                            <span>
+                                                Pasta vazia
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            if (_qtdArquivos > 0)
+                                            {
+                                                <span>
+                                                    @_qtdArquivos
+
+                                                    @if (_qtdArquivos > 1)
+                                                    {
+                                                        <text>Arquivos</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>Arquivo </text>
+                                                    }
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                //_qtdpastas_font = " qtdpastas_font";
+                                                //_textpastas_font = " textpastas_font";
+                                            }
+                                            if (_qtdPastas > 0)
+                                            {
+
+                                                <span>
+                                                    @_qtdPastas
+
+                                                    @if (_qtdPastas > 1)
+                                                    {
+                                                        <text>Pastas</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>Pasta</text>
+                                                    }
+                                                </span>
+                                            }
+                                        }
+                                    </div>
+                                </a>
+                                <ul>
+                                    <li class="dropdown">
+                                        @*@if (_qtdPastas == 0)
+                                            {*@
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href='#' id="tituloPasta" data-caminho="@dir.Diretorio.Replace(@"//", @"/")">
+                                            @dir.DiretorioNome
+                                        </a>
+                                        @*}
+                                            else
+                                            {
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href='#' id="tituloPasta">
+
+                                                    <i class="fa fa-caret-down"></i>
+                                                    @dir.DiretorioNome
+                                                </a>
+                                                <ul class="dropdown-menu photomenu">
+                                                    @foreach (string subDir in subDiretorioListaModel)
+                                                    {
+                                                        <li>
+                                                            <a href="#" url="" class="subDiretorio">
+                                                                <i class="fa fa-folder"></i>
+                                                                @subDir
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }*@
+                                    </li>
+                                </ul>
+                            </div>
+                        </div><!--style="border:1px solid #808080; width:255px; height:150px -->
+                    </div><!--col-md-3 -->
+                                        //     _qtdPastasPastaAberta++;
+
+                                        if (_qtdArquivos == 0 && _qtdPastas == 0)
+                                        {
+                                            _iconFolder = "fa fa-folder-o";
+                                            _iconFolderTitle = "Pasta vazia.";
+                                        }
+                                        else
+                                        {
+                                            _iconFolder = "fa fa-folder";
+
+                                            _iconFolderTitle = "Contem: ";
+                                            if (_qtdArquivos > 0)
+                                            {
+
+                                                _iconFolderTitle = _iconFolderTitle + " " + _qtdArquivos;
+
+                                                if (_qtdArquivos > 1)
+                                                {
+                                                    _iconFolderTitle = _iconFolderTitle + " " + "Arquivos";
+                                                }
+                                                else
+                                                {
+                                                    _iconFolderTitle = _iconFolderTitle + " " + "Arquivo";
+                                                }
+                                            }
+
+                                            if (_qtdArquivos > 0 && _qtdPastas > 0)
+                                            {
+                                                _iconFolderTitle = _iconFolderTitle + " " + "e ";
+                                            }
+
+                                            if (_qtdPastas > 0)
+                                            {
+
+                                                _iconFolderTitle = _iconFolderTitle + " " + _qtdPastas;
+
+                                                if (_qtdPastas > 1)
+                                                {
+                                                    _iconFolderTitle = _iconFolderTitle + " " + "Pastas";
+                                                }
+                                                else
+                                                {
+                                                    _iconFolderTitle = _iconFolderTitle + " " + "Pasta";
+                                                }
+                                            }
+
+                                        }
+                                        <div class="item col-md-12 container_folders_lista @_viewgridlist" style="border:1px none #ffd800; padding:1px 3px">
+                                            <div class="folders_lista">
+                                                <a href="#" data-caminho="@dir.Diretorio.Replace(@"//", @"/")">
+                                                    <div class="body_lista @_viewgridlist">
+                                                        <div class="body_lista_icon col-md-1">
+                                                            <div class="item col-xs-4 col-md-4 itemcheckbox" style="padding-left:0px; margin:0px; height:45px; width:20px; border:1px none #b6ff00; margin-top:-12px">
+                                                                @*<div class="checkbox checkbox-info">
+                                                                        <input type="checkbox" id="checkbox" class="circlecheckbox">
+                                                                    </div>*@
+                                                                <div class="checkbox checkbox-info checkbox-circle" style="margin-top:10px">
+                                                                    <input type="checkbox" name="checkboxFolders" id="checkbox_folderlista_@_qtdCheckboxPastas" class="circlecheckbox checkbox_folderlista notContext" value="@dir.Diretorio.Replace(@"//", @"/")" data-nome="@dir.DiretorioNome" data-tipo="D" data-view="lista" data-setviewchange="#checkbox_foldergrid_@_qtdCheckboxPastas">
+                                                                    <label for="checkbox">
+
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="item col-md-8 hidden-xs hidden-sm" style="border:1px none #ff0000; position:relative;">
+                                                                @*<i class="fa fa-circle fa-stack-2x" style="font-size:41px; margin-top:-11px;"></i>*@
+                                                                <i class="@_iconFolder" style="display:block; font-size:30px;  margin-top:-4px; height:30px; border:1px none #ff0000;" title="@_iconFolderTitle" data-tooltip="true" data-placement="top"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="body_lista_titulo col-md-6">
+                                                            @dir.DiretorioNome
+                                                        </div>
+                                                        <div class="body_lista_tipo col-md-2">
+                                                            Pasta
+                                                        </div>
+                                                        <div class="body_lista_conteudo col-md-3">
+                                                            @if (_qtdArquivos == 0 && _qtdPastas == 0)
+                                                            {
+                                                                <span>
+                                                                    Pasta vazia
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                if (_qtdArquivos > 0)
+                                                                {
+                                                                    <span>
+                                                                        @_qtdArquivos
+
+                                                                        @if (_qtdArquivos > 1)
+                                                                        {
+                                                                            <text>Arquivos</text>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <text>Arquivo </text>
+                                                                        }
+                                                                    </span>
+                                                                }
+
+                                                                if (_qtdPastas > 0)
+                                                                {
+
+                                                                    <span>
+                                                                        @_qtdPastas
+
+                                                                        @if (_qtdPastas > 1)
+                                                                        {
+                                                                            <text>Pastas</text>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <text>Pasta</text>
+                                                                        }
+                                                                    </span>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                }
+
+            </div><!--container_listadiretorio -->
+        }
+
+        @if (_qtdArquivosPastaAberta > 0)
+        {
+            <div class="row" id="container_listaarquivos">
+                @if (_qtdPastasPastaAberta <= 0)
+                {
+                    <div class="col-md-12 container_header_lista @_viewgridlist">
+                        <div id="header_lista" class="header_lista">
+                            <div id="header_lista_icon" class="col-md-1">
+                                <div class=" checkbox checkbox-info checkbox-circle conteiner_checkbox_all notContext">
+                                    @*data-tooltip="true" data-placement="right" title="Selecionar Todos"*@
+                                    <input type="checkbox" name="checkboxAll" id="checkboxAll" class="notContext" value="" data-view="@_viewgridlist" data-qtdcheckitem="@(_qtdPastasPastaAberta + _qtdArquivosPastaAberta)">
+                                    <label for="checkbox">
+
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="header_lista_titulo" class="col-md-6">
+                                Nome
+                            </div>
+                            <div id="header_lista_tipo" class="col-md-2">
+                                Tipo
+                            </div>
+                            <div id="header_lista_conteudo" class="col-md-3">
+                                Conteúdo
+                            </div>
+                        </div>
+                    </div>
+                }
+                @*==== Lista os arquivos do diretorio atual ==== *@
+                @{
+            string _strTodosArquivosNome = "";
+
+
+                }
+
+                @foreach (NewPhotoCloud.Models.ListaArquivos arq in Model.listaArquivo)
+                {
+                    _qtdCheckboxArquivos++;
+
+                    string _diretorioArquivo = "";
+
+                    _diretorioArquivo = arq.ArquivoDiretorio.Replace(@"pho_fotos", @"pho_fotos_miniatura");
+
+                    switch (arq.ArquivoExtensao.ToLower())
+                    {
+                        case "mpg":
+                            _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                            break;
+                        case "wmv":
+                            _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                            break;
+                        case "mp4":
+                            _diretorioArquivo = _diretorioArquivo.Substring(0, _diretorioArquivo.LastIndexOf(".")) + ".jpg";
+                            break;
+
+                    }
+                    _iconFile = "fa fa-file-o";
+                    if (arq.ArquivoExtensao.ToLower() == "jpg" || arq.ArquivoExtensao.ToLower() == "mpg" || arq.ArquivoExtensao.ToLower() == "gif")
+                    {
+                        _iconFile = "fa fa-file-image-o";
+                    }
+                    if (arq.ArquivoExtensao.ToLower() == "mpg" || arq.ArquivoExtensao.ToLower() == "wmv" || arq.ArquivoExtensao.ToLower() == "mp4")
+                    {
+                        _iconFile = "fa fa-file-video-o";
+                    }
+
+
+                    if (_galleryPrettyPhotoList != "" && _galleryPrettyPhotoList != null)
+                    {
+                        _galleryPrettyPhotoList = _galleryPrettyPhotoList + "," + arq.ArquivoDiretorio.Replace(@"//", @"/");
+                    }
+                    else
+                    {
+                        _galleryPrettyPhotoList = arq.ArquivoDiretorio.Replace(@"//", @"/");
+                    }
+
+
+
+                    <div class="item col-md-2 container_files_grid @_viewgridlist" style="border:1px none #ff0000; padding:0px">
+                        <div class="files" style="border:1px none #b6ff00; width:160px; min-width:160px; margin-bottom:3px;">
+                            <a href="@arq.ArquivoDiretorio.Replace(@"//", @"/")" url="@arq.ArquivoDiretorio.Replace(@"//", @"/")" data-caminho="@arq.ArquivoCaminho.Replace(@"//", @"/")" data-positiongallery="@_positionGalleryPrettyPhoto">
+                                <div class=" checkbox checkbox-info checkbox-circle conteiner_checkbox_grid" style="right: 25px; top:10px;">
+                                    <input type="checkbox" name="checkboxFolders" id="checkbox_filegrid_@_qtdCheckboxArquivos" class="circlecheckbox checkbox_filegrid notContext" value="@arq.ArquivoCaminho.Replace(@"//", @"/")" data-caminho="@arq.ArquivoDiretorio.Replace(@"//", @"/")" data-nome="@arq.ArquivoNome" data-tipo="A" data-view="grid" data-setviewchange="#checkbox_filelista_@_qtdCheckboxArquivos">
+                                    <label for="checkbox">
+
+                                    </label>
+                                </div>
+
+                                <img class="thumbnail" style="width:150px;height:150px;" alt="" src="@_diretorioArquivo" />
+                            </a>
+                            <span id="tituloPasta" style="display:none;">@arq.ArquivoNome</span>
+                        </div>
+                    </div><!--container_files_grid -->
+
+                    <div class="item col-md-12 container_files_lista @_viewgridlist" style="border:1px none #ffd800; padding:1px 3px">
+                        <div class="files_lista">
+                            @*<a href="@arq.ArquivoDiretorio.Replace(@"//", @"/")" url="@arq.ArquivoDiretorio.Replace(@"//", @"/")" rel="prettyPhoto[gallery_@_pastaAtual]">*@
+                            <a href="@arq.ArquivoDiretorio.Replace(@"//", @"/")" url="@arq.ArquivoCaminho.Replace(@"//", @"/")" data-caminho="@arq.ArquivoCaminho.Replace(@"//", @"/")" data-positiongallery="@_positionGalleryPrettyPhoto">
+                                <div class="body_lista @_viewgridlist">
+                                    <div class="body_lista_icon col-md-1">
+                                        <div class="item col-xs-4 col-md-4 itemcheckbox" style="padding-left:0px; margin:0px; height:30px; width:20px; border:1px none #b6ff00;">
+                                            <div class="checkbox checkbox-info checkbox-circle">
+                                                <input type="checkbox" name="checkboxFiles" id="checkbox_filelista_@_qtdCheckboxArquivos" class="circlecheckbox checkbox_filelista notContext" value="@arq.ArquivoCaminho.Replace(@"//", @"/")" data-caminho="@arq.ArquivoDiretorio.Replace(@"//", @"/")" data-nome="@arq.ArquivoNome" data-tipo="A" data-view="lista" data-setviewchange="#checkbox_filegrid_@_qtdCheckboxArquivos">
+                                                <label for="checkbox">
+
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="item col-xs-8 col-md-8" style="border:1px none #ff0000; position:relative;">
+                                            @*<i class="fa fa-circle fa-stack-2x" style="font-size:41px; margin-top:-11px;"></i>*@
+                                            <i class="@_iconFile" style="display:block; font-size:30px;  margin-top:-4px; height:30px; border:1px none #ff0000;" title="@_iconFolderTitle" data-tooltip="true" data-placement="top"></i>
+                                        </div>
+                                    </div>
+                                    <div class="body_lista_titulo col-md-6">
+                                        @arq.ArquivoNome
+                                    </div>
+                                    <div class="body_lista_tipo col-md-2">
+                                        Arquivo
+                                    </div>
+                                    <div class="body_lista_conteudo col-md-3">
+                                        <span>
+                                            @arq.ArquivoExtensao
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div><!--container_files_lista -->
+
+
+
+                    _positionGalleryPrettyPhoto++;
+                }
+                <input type="hidden" name="hidgalleryPrettyPhotoList" id="hidgalleryPrettyPhotoList" value="@_galleryPrettyPhotoList" />
+            </div><!--row -->
+        }
+    </div><!--container_principallista -->
+        }
+        <script>
+            $('.modal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var recipient = button.data('whatever')
+
+                var modal = $(this)
+                modal.find('.modal-subtitle').text(recipient)
+
+            })
+        </script>

@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/pho_images/phoimg_icones/favicon.ico" />
+    <title>[New PhotoCloud]</title>
+    
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <!-- Wrapper-->
+    <div id="wrapper">
+            <!-- Top Navbar -->
+            <div class="row border-bottom" role="navigation">
+                <nav class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="navbar-header">
+                        <a class="navbar-logo" id="linkHome" href="/Home" alt="[PhotoCloud]" title="Início"></a>
+                    </div>
+                    <div class="navbar-left" id="navbar-menuhorizontal">
+                        <ul id="menuhorizontal-top" class="nav navbar-nav"></ul>
+                    </div>
+                        @Html.Partial("_LoginPartial")
+                </nav>
+            </div>
+            <!-- Main view  -->
+            <div class="container-fluid body-content">
+                <div id="sidebar-content" class="col-md-3 sidebar">
+                    <div>
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist" id="abas_menu_lateral">
+                            <li role="presentation" class="active" id="tabArquivos"><a href="#sidebar-content-cloud" id="tabcloud" aria-controls="sidebar-content-cloud" role="tab" data-toggle="tab"><i class="fa fa-cloud change" data-icon="fa fa-cloud">&nbsp;&nbsp;</i>Nuvem de Arquivos</a></li>
+                            <li role="presentation" class="disabled" id="tabLixeira"><a href="#sidebar-content-trash" id="tabtrash" aria-controls="sidebar-content-trash" role="tab" data-toggle=""><i class="fa fa-trash change" data-icon="fa fa-trash">&nbsp;&nbsp;</i>Lixeira<div id="container_avisolixeira"><i class="fa fa-recycle"></i><div id="container_label_avisolixeira" class="label label-success"><span id="label_avisolixeira">0</span></div></div></a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="sidebar-content-cloud"></div>
+                            <div role="tabpanel" class="tab-pane" id="sidebar-content-trash"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="container_contents" class="col-md-9 main">
+                    @RenderBody()
+                </div>
+            </div>
+        <hr style="margin:10px 15px 5px 15px;" />    
+            <!-- Footer -->
+            <footer class="footer">
+                   
+        <div class="text-center">
+
+                    <p class="text-muted"><strong>Copyright</strong> Clayton Gandraº © 2015 </p>
+                </div>
+            </footer><!-- End Footer -->
+    </div><!-- End wrapper-->
+    
+    
+
+
+    <div id="contextMenu" class="dropdown clearfix">
+        <ul id="contextMenu_dropdown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;"></ul>
+    </div>
+
+    <section id="section_modal"></section>
+    <section id="section_dialog"></section>
+
+    @*@RenderPage("~/Views/Shared/_ModalBootstarp.cshtml")*@
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryplugins")
+    @Scripts.Render("~/bundles/javascript")
+   
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

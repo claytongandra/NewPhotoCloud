@@ -1,0 +1,378 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<input type="hidden" name="hidDiretorioPai" id="hidDiretorioPai" value="/" />
+<input type="hidden" name="hidDiretorioAtual" id="hidDiretorioAtual" value="/" />
+<div class="row" id="container_breadcrumb">
+    <ul class="nav" style="background-color: #DFDFE0; padding:4px;">
+        <li>
+            <ul id="menuhorizontal" class="nav navbar-nav">
+
+            </ul>
+
+        </li>
+    </ul>
+</div>
+    <div class="row" style="border:1px none #00ffff;">
+        <div class="col-md-12" style=" padding-top:0; padding-bottom:0;">
+            <div class="bs-callout bs-callout-default">
+
+                <div class="col-md-2" style="height:157px; float:left; padding:3px; border:1px none #4cff00;">
+                    <img src="~/Content/pho_images/phoimg_icones/imgico_picturescam_circle.png" width="150" height="150" />
+                </div>
+                <div class="col-md-10" style="border:1px none #4cff00; float:left; padding:15px 5px; height:157px;">
+                    <h4>Mantenha suas fotos em um só lugar.</h4>
+                    Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.
+                </div>
+                <div style="clear:left;"></div>
+            </div>
+        </div>
+        <div class="col-md-12" style=" padding-top:0; padding-bottom:0;">
+            <div class="bs-callout bs-callout-default-right">
+                <div class="col-md-10" style="border:1px none #4cff00; float:left; padding:15px 5px; height:157px;">
+                    <h4>Organize por pastas.</h4>
+                    Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Interagi no mé, cursus quis, vehicula ac nisi. Aenean vel dui dui. Nullam leo erat, aliquet quis tempus a, posuere ut mi. Ut scelerisque neque et turpis posuere pulvinar pellentesque nibh ullamcorper. Pharetra in mattis molestie, volutpat elementum justo. Aenean ut ante turpis. Pellentesque laoreet mé vel lectus scelerisque interdum cursus velit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac mauris lectus, non scelerisque augue. Aenean justo massa.
+                </div>
+                <div class="col-md-2" style="height:157px; float:right; padding:3px; border:1px none #4cff00;">
+                    <img src="~/Content/pho_images/phoimg_icones/imgico_photoalbum_circle.png" width="150" height="150" />
+                </div>
+                <div style="clear:left;"></div>
+            </div>
+        </div>
+        <div class="col-md-12" style=" padding-top:0; padding-bottom:0;">
+            <div class="bs-callout bs-callout-default">
+
+                <div class="col-md-2" style="height:157px; float:left; padding:3px; border:1px none #4cff00;">
+                    <img src="~/Content/pho_images/phoimg_icones/imgico_picturesmove_circle.png" width="150" height="150" />
+                </div>
+                <div class="col-md-10" style="border:1px none #4cff00; float:left; padding:15px 5px; height:157px;">
+                    <h4>Visualize todas as suas fotos e vídeos.</h4>
+                    Casamentiss faiz malandris se pirulitá, Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer Ispecialista im mé intende tudis nuam golada, vinho, uiski, carirí, rum da jamaikis, só num pode ser mijis. Adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                </div>
+                <div style="clear:left;"></div>
+            </div>
+        </div>
+        @*<div class="col-md-12">
+            <div class="bs-callout">
+                <h4>Callout</h4>
+                Este é o callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-photocloud">
+                <h4>PhotoCloud Callout</h4>
+                Este é o photocloud callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-photocloud-color">
+                <h4>PhotoCloud Callout Color</h4>
+                Este é o photocloud callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-photocloud-right">
+                <h4>PhotoCloud Callout</h4>
+                Este é o photocloud right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-photocloud-right-color">
+                <h4>PhotoCloud Callout</h4>
+                Este é o photocloud right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-photocloud-top">
+                <h4>PhotoCloud Callout</h4>
+                Este é o photocloud top callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-photocloud-top-color">
+                <h4>PhotoCloud Callout</h4>
+                Este é o photocloud top callout.
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-default">
+                <h4>Default Callout</h4>
+                Este é o default callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-default-color">
+                <h4>Default Callout</h4>
+                Este é o default callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-default-right">
+                <h4>Default Callout</h4>
+                Este é o default right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-default-right-color">
+                <h4>Default Callout</h4>
+                Este é o default right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-default-top">
+                <h4>Default Callout</h4>
+                Este é o default top callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-default-top-color">
+                <h4>Default Callout</h4>
+                Este é o default top callout.
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-primary">
+                <h4>Primary Callout</h4>
+                Este é o primary callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-primary-color">
+                <h4>Primary Callout</h4>
+                Este é o primary callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-primary-right">
+                <h4>Primary Callout</h4>
+                Este é o primary right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-primary-right-color">
+                <h4>Primary Callout</h4>
+                Este é o primary right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-primary-top">
+                <h4>Primary Callout</h4>
+                Este é o primary top callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-primary-top-color">
+                <h4>Primary Callout</h4>
+                Este é o primary top callout.
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-info">
+                <h4>Info Callout</h4>
+                Este é o info callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-info-color">
+                <h4>Info Callout</h4>
+                Este é o info callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-info-right">
+                <h4>Info Callout</h4>
+                Este é o info right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-info-right-color">
+                <h4>Info Callout</h4>
+                Este é o info right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-info-top">
+                <h4>Info Callout</h4>
+                Este é o info top callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-info-top-color">
+                <h4>Info Callout</h4>
+                Este é o info top callout.
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-success">
+                <h4>Success Callout</h4>
+                Este é o success callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-success-color">
+                <h4>Success Callout</h4>
+                Este é o success callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-success-right">
+                <h4>Success Callout</h4>
+                Este é o success right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-success-right-color">
+                <h4>Success Callout</h4>
+                Este é o success right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-success-top">
+                <h4>Success Callout</h4>
+                Este é o success top callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-success-top-color">
+                <h4>Success Callout</h4>
+                Este é o success top callout.
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-warning">
+                <h4>Warning Callout</h4>
+                Este é o warning callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-warning-color">
+                <h4>Warning Callout</h4>
+                Este é o warning callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-warning-right">
+                <h4>Warning Callout</h4>
+                Este é o warning right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-warning-right-color">
+                <h4>Warning Callout</h4>
+                Este é o warning right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-warning-top">
+                <h4>Warning Callout</h4>
+                Este é o warning top callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-warning-top-color">
+                <h4>Warning Callout</h4>
+                Este é o warning top callout.
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-danger">
+                <h4>Danger Callout</h4>
+                Este é o danger callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-danger-color">
+                <h4>Danger Callout</h4>
+                Este é o danger callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-danger-right">
+                <h4>Danger Callout</h4>
+                Este é o danger right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-danger-right-color">
+                <h4>Danger Callout</h4>
+                Este é o danger right callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-danger-top">
+                <h4>Danger Callout</h4>
+                Este é o danger top callout.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bs-callout bs-callout-danger-top-color">
+                <h4>Danger Callout</h4>
+                Este é o danger top callout.
+            </div>
+        </div>*@
+
+            @*<div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <div class="col-xs-1" style="border:1px solid #ffd800;">
+        <h2>[O]</h2>
+
+    </div>
+    <a href="utilizacaoDialog.html">Dialog</a>*@
+        </div>
+    @*<div class="row">
+        <form action="MenuLateral/MenuLixeira" method="post">
+            <input type="text" name="pasta" id="pasta" value="Lixeira" />
+            <input type="submit" value="" />
+        </form>
+    </div>*@
+
+
+@*<script src="Scripts/dialogs.js"></script>*@

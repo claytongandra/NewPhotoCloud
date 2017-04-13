@@ -1,0 +1,28 @@
+﻿@model NewPhotoCloud.Models.ExternalLoginListViewModel
+@using Microsoft.Owin.Security
+
+<h5>Ou utilize outro serviço para fazer o login:</h5>
+<hr />
+@{
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+    if (loginProviders.Count() == 0) {
+        <div>
+            <p>
+                There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                for details on setting up this ASP.NET application to support logging in via external services.
+            </p>
+        </div>
+    }
+    else {
+        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
+            @Html.AntiForgeryToken()
+            <div id="socialLoginList">
+                <p>
+                    @foreach (AuthenticationDescription p in loginProviders) {
+                        <button type="submit" class="btn btn-default btn-photocloud" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Entrar utilizando sua conta do @p.Caption"><img src="~/Content/pho_images/phoimg_botoes/@(p.Caption)_logo_branco_24.png" style="margin-right:10px;" />@p.AuthenticationType</button>
+                    }
+                </p>
+            </div>
+        }
+    }
+}

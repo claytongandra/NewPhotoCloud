@@ -1,0 +1,83 @@
+
+Enable-Migrations -ContextTypeName NewPhotoCloud.Models.ApplicationDbContext -Force
+
+
+Add-Migration NewPhotoApplicationDb
+
+Update-Database
+
+só
+-------------------------------------
+
+
+Enable-Migrations -ContextTypeName NewPhotoCloud.Repositories.UsuarioContext
+
+Add-Migration NewPhoto
+
+Update-Database
+
+
+Enable-Migrations -ContextTypeName NewPhotoCloud.Models.ApplicationDbContext -Force
+
+
+Add-Migration NewPhotoApplicationDb
+
+Update-Database
+
+
+
+
+SELECT 
+  [Usu_Status]
+  ,[Usu_DiretorioBase]
+  ,[Uac_UserName]
+  ,*
+  FROM [NewPhotoCloud].[dbo].[NewPhotoCloudUsuarios]
+  INNER JOIN [NewPhotoCloud].[dbo].[NewPhotoCloudUsuariosAcesso] ON [Usu_Id] = Uac_Fk_Usu_Id
+  ORDER BY Usu_Id
+  
+ delete from  [NewPhotoCloud].[dbo].[NewPhotoCloudUsuariosAcesso]
+delete from [NewPhotoCloud].[dbo].[NewPhotoCloudUsuarios]
+ 
+
+ DBCC CHECKIDENT('[NewPhotoCloud].[dbo].[NewPhotoCloudUsuarios]', RESEED, 0)
+
+select * FROM [NewPhotoCloud].[dbo].[NewPhotoCloudUsuarios]
+select * FROM [NewPhotoCloud].[dbo].[NewPhotoCloudUsuariosAcesso]
+
+  select * FROM [NewPhotoCloud].[dbo].[NewPhotoCloudUsuariosLogins]
+
+  select * FROM [NewPhotoCloud].[dbo].[NewPhotoCloudRoles]
+  select * FROM [NewPhotoCloud].[dbo].[NewPhotoCloudUsuariosClaims]
+  select * FROM [NewPhotoCloud].[dbo].[NewPhotoCloudUsuariosLogins]
+  select * FROM [NewPhotoCloud].[dbo].[NewPhotoCloudUsuariosRoles]
+
+/***************************************************************************************/
+
+  select * from  [NewPhotoCloud].[dbo].NewPhotoCloudDiretoriosArquivos
+
+  drop TABLE [NewPhotoCloudDiretoriosArquivos]
+
+  CREATE TABLE [dbo].[NewPhotoCloudDiretoriosArquivos](
+
+  Dia_Id INT IDENTITY,
+  Dia_Fk_Usu_Id INT NOT NULL,
+  Dia_Nome VARCHAR(100) NOT NULL,
+  Dia_CaminhoOriginal VARCHAR(MAX) NULL,
+  Dia_CaminhoAtual VARCHAR(MAX) NOT NULL,
+  Dia_Tipo VARCHAR(10)  NOT NULL,
+  Dia_DataCriacao DATETIME NOT NULL,
+  Dia_DataExclusao DATETIME  NULL,
+  Dia_Status VARCHAR(10) NOT NULL
+       CONSTRAINT XPKNewPhotoCloudDiretoriosArquivos
+              PRIMARY KEY (Dia_Id)
+)
+GO
+
+ALTER TABLE NewPhotoCloudDiretoriosArquivos
+       ADD CONSTRAINT Dia_Usu_Id
+              FOREIGN KEY (Dia_Fk_Usu_Id)
+                             REFERENCES NewPhotoCloudUsuarios
+GO
+
+ALTER TABLE dbo.NewPhotoCloudUsuarios ADD Usu_FotoPerfil VARCHAR(MAX) NULL

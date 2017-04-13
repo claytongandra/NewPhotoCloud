@@ -1,0 +1,33 @@
+﻿@model NewPhotoCloud.Models.ChangePasswordViewModel
+
+@using (Html.BeginForm("ChangePasswordModal", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "form_alterarsenhamodal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.OldPassword, new { @class = "col-md-4 control-label" })
+        <div class="col-md-8">
+            @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control", @placeholder = "Senha atual" })
+            @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.NewPassword, new { @class = "col-md-4 control-label" })
+        <div class="col-md-8">
+            @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control", @placeholder = "Nova senha", @id = "NewPassword" })
+            @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label" })
+        <div class="col-md-8">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmação da nova senha", @id = "ConfirmPassword" })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-4 col-md-8">
+            <input type="submit" value="Alterar senha" class="btn btn-default btn-photocloud btn-block" />
+        </div>
+    </div>
+}

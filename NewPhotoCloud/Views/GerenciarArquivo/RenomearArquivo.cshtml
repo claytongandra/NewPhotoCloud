@@ -1,0 +1,38 @@
+﻿@{
+    int _status = @ViewBag.Status;
+    string _caminhoRetorno = @ViewBag.CaminhoRetorno;
+    string _arquivoRetorno = @ViewBag.ArquivoRetorno;
+    string _arquivoExtencao = @ViewBag.ExtencaoRetorno;    
+}
+
+@if (_status < 0)
+{
+
+    <div class="alert alert-danger alert-dismissible fade in" role="alert" id="modal_alert_criarpasta">
+        <button type="button" class="close btn_modal" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        @Html.Raw(@ViewBag.Message)
+    </div>
+}
+else if (_status > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade in" role="alert" id="modal_alert_criarpasta">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        @Html.Raw(@ViewBag.Message)
+    </div>
+}
+else
+{
+    <div class="alert alert-success alert-dismissible fade in" role="alert" id="modal_alert_criarpasta">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        @Html.Raw(@ViewBag.Message)
+    </div>
+}
+<input type="hidden" name="hidCaminhoRetorno" id="hidCaminhoRetorno" value="@_caminhoRetorno" />
+<input type="hidden" name="hidArquivoRetorno" id="hidArquivoRetorno" value="@_arquivoRetorno" />
+<input type="hidden" name="hidExtencaoRetorno" id="hidExtencaoRetorno" value="@_arquivoExtencao" />

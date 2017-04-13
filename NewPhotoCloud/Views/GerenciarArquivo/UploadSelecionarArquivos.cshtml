@@ -1,0 +1,94 @@
+﻿@{
+
+    var _pastaAtual = @ViewData["pastaAtual"];
+    var _diretorioAtual = @ViewData["diretorioAtual"];
+    var _diretorioPai = @ViewData["diretorioPai"];
+    var _breadcrumbUrl = "";
+    var _breadcrumb = (string[])ViewData["breadcrumb"];
+
+    //int _qtdPastasPastaAberta = 0;
+    //int _qtdArquivosPastaAberta = 0;
+}
+
+<input type="hidden" name="hidDiretorioPai" id="hidDiretorioPai" value="@_diretorioPai" />
+<input type="hidden" name="hidDiretorioAtual" id="hidDiretorioAtual" value="@_diretorioAtual" />
+
+<div class="row">
+    <ul class="nav" id="container_breadcrumb" style="background-color: #DFDFE0; padding:4px;">
+
+        <li>
+            <div class="dropdown" style="float:left;">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownPastaAtual" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="fa fa-folder-open"></i>
+                    @_pastaAtual
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownPastaAtual">
+                    <li><a tabindex="-1" href="#" id="breadcrumb_exibirconteudo" data-caminho="@_diretorioAtual"><i class="fa fa-folder-open-o">&nbsp;&nbsp;</i>Exibir Conteúdo</a></li>
+                    @if (@_pastaAtual != "[photoCloud:]")
+                    {
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#" id="breadcrumb_renomear" data-toggle="modal" data-target="#modalBootstrap" data-whatever="@_pastaAtual" data-estadopasta="aberta" data-acaopagina="uploadarquivo" data-caminho="@_diretorioAtual"><i class="fa fa-pencil">&nbsp;&nbsp;</i>Renomear</a></li>
+                        <li><a href="#" id="breadcrumb_moverpara" data-toggle="modal" data-target="#modalBootstrap" data-nome="@_pastaAtual" data-estadopasta="aberta" data-tipo="D" data-caminho="@_diretorioAtual"><i class=" fa fa-arrows">&nbsp;&nbsp;</i>Mover Para</a></li>
+                        <li><a href="#" class="btn disabled" style="text-align: left;"><i class="fa fa-files-o">&nbsp;&nbsp;</i>Copiar Para</a></li>
+                    }
+                </ul>
+            </div>
+        </li>
+        <li>
+            <ul id="menuhorizontal" class="nav navbar-nav"></ul>
+
+        </li>
+
+        <li>
+            <ul class="breadcrumb" id="breadcrumb_list">
+                @{
+                    int _cont = 0;
+                    if (_breadcrumb != null)
+                    {
+                        foreach (string atalho in _breadcrumb)
+                        {
+
+                          //  _breadcrumbUrl = _breadcrumbUrl + atalho + "/"; ;
+                            if (_pastaAtual.ToString() != atalho.ToString())
+                            {
+                                _cont++;
+                                _breadcrumbUrl = _breadcrumbUrl + @atalho + "/";
+                               <li data-tooltip="" data-placement="top" title="@atalho"><a href="#" data-caminho="/@_breadcrumbUrl"><i class="fa fa-folder">&nbsp;</i>@atalho</a></li>
+                            }
+  
+                        }
+                        if (_cont > 0)
+                        {
+                            _breadcrumbUrl = _breadcrumbUrl + @_pastaAtual + "/";
+                            <li><a href="#" data-caminho="/@_breadcrumbUrl"><i class="fa fa-folder-open">&nbsp;</i><strong>@_pastaAtual</strong></a></li>
+                        }
+                    }
+}
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="row" id="container_carregararquivos">
+    <br />
+    <h4>Carregar arquivos na pasta <strong>@_pastaAtual</strong></h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("UploadArquivos", "GerenciarArquivo", FormMethod.Post, new { @class = "form-horizontal", id = "form_carregararquivo", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="hidden" name="hidcaminho" id="hidcaminho" value="@_diretorioAtual" />
+                        <input type="file" name="file_upload" id="file_upload" />
+                        @*<input type="submit" value=">>" />*@
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@{
+
+}
+
+@*@Model.DtMovArqPas;*@
+
+    <div class="form-group">
+        <div id="content-desfazer_mover" style="overflow-y:auto; width:100%;height:390px; background:#f6f6f6;">
+            @foreach (NewPhotoCloud.Models.MoverPastaArquivo movidos in Model)
+            {
+                <div class="item col-md-12 container_folders_lista lista" id="containeritemconflito_" style="border:1px none #ffd800; padding:1px 1px">
+                    <div class="folders_lista">
+                        <div class="body_lista lista">
+                            <div class="body_lista_icon col-md-12">
+                                <div class="item col-xs-4 col-md-12 itemcheckbox" style="padding-left:0px; margin:0px; height:45px; border:1px none #b6ff00; margin-top:-12px;cursor: pointer;">
+                                    <div class="checkbox checkbox-info checkbox-circle" style="margin-top:12px; cursor: pointer;">
+                                        <input type="checkbox" name="checkboxFoldersDesfazer" id="" class="circlecheckbox checkbox_folderlista notContext" value="@movidos.CodigoPastaArquivo" style="cursor: pointer;">
+                                        <label for="checkbox" style="cursor: pointer;">@movidos.NomePastaArquivo</label>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row" style="padding:10px 0 0 0;">
+            <div class=" col-md-5 col-lg-offset-4">
+                <button type="button" class="btn btn-default btn-photocloud btn-block disabled" id="Desfazer"><span class="glyphicon glyphicon-transfer" style="font-size:15px;">&nbsp;</span>Desfazer Mover</button>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="Cancelar"><span class="fa fa-times" style="font-size:15px;">&nbsp;</span>Cancelar</button>
+            </div>
+        </div>
+    </div>

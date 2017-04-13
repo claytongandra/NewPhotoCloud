@@ -1,0 +1,95 @@
+﻿@using System;
+@using System.IO;
+
+
+@{
+    var _pastaAtual = @ViewData["pastaAtual"];
+    int _qtdPastas = 0;
+    int _qtdArquivos = 0;
+    int _qtdTotalItens = 0;
+    string _plusTotalItens = "";
+}
+@{
+
+    _qtdPastas = Model.listaDiretorio.Count;
+    _qtdArquivos = Model.listaArquivo.Count;
+
+    _qtdTotalItens = _qtdPastas + _qtdArquivos;
+
+    if (_qtdTotalItens > 99)
+    {
+        _qtdTotalItens = 99;
+        _plusTotalItens = "+";
+    }
+}
+
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    @if (_qtdPastas > 0)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Pastas
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <ul>
+                    @foreach (NewPhotoCloud.Models.ListaDiretorios dir in Model.listaDiretorio)
+                    {
+                        <li>@dir.DiretorioNome</li>
+                    }
+                    </ul>
+                </div>
+            </div>
+        </div>  
+    } 
+    @if (_qtdArquivos > 0)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Arquivos
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <ul>
+                        @foreach (NewPhotoCloud.Models.ListaArquivos arq in Model.listaArquivo)
+                        {
+                            <li>@arq.ArquivoNome</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@*@if (_qtdPastas > 0)
+{
+    <div style="border:1px none #ff0000;">
+        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-listalixeira", role = "form", id = "form_gerenciarlixeira" }))
+        {
+            foreach (NewPhotoCloud.Models.ListaDiretorios dir in Model.listaDiretorio)
+            {
+
+                <div>@dir.DiretorioNome</div>
+
+
+            }
+
+        }
+    </div>
+    <div class="form-group">
+        <div class="col-md-6">
+            <input type="submit" class="btn btn-default btn-block" value="Cadastrar" />
+        </div>
+    </div>
+}*@ 
+        <input type="hidden" name="hidQtdItemLixeira" id="hidQtdItemLixeira" value="@_plusTotalItens@_qtdTotalItens" />

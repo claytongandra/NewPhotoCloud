@@ -1,0 +1,33 @@
+﻿@{
+    int _status = @ViewBag.Status;
+}
+
+@if (_status < 0)
+{
+
+    <div id="container_alertmover" class="alert alert-danger" role="alert">
+        @*<div id="alertmover_content"><span style='font-size:40px;float:left;clear:left;margin:0 10px 0 0;' class='fa fa-times-circle'></span><p>@Html.Raw(@ViewBag.Message)</p></div>
+        <div style="clear:both;"></div>*@
+        <div id="alertmover_content">@Html.Raw(@ViewBag.Message)</div>
+    </div>
+}
+else if (_status > 0)
+{
+    <div id="container_alertmover" class="alert alert-warning" role="alert">
+        @*<div id="alertmover_content"><span style='font-size:40px;color:#DC952D;float:left;margin:0 10px 0 0;' class='fa fa-exclamation-triangle'></span><p>@Html.Raw(@ViewBag.Message)</p></div>
+        <div style="clear:both;"></div>*@
+        <div id="alertmover_content">@Html.Raw(@ViewBag.Message)</div>
+    </div>
+}
+else
+{
+    <div id="container_alertmover" class="alert alert-success" role="alert">
+        @*<div id="alertmover_content"><span style='font-size:40px;float:left;clear:left;margin:0 10px 0 0;' class='fa fa-check-circle'></span> <p>@Html.Raw(@ViewBag.Message)</p></div>
+        <div style="clear:both;"></div>*@
+        <div id="alertmover_content">@Html.Raw(@ViewBag.Message)</div>
+    </div>
+}
+
+
+
+
